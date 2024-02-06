@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <ApplicationIcon>letter-r.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="cimgui.dll" />
+    <None Remove="Resources\Font\Roboto-Regular.ttf" />
+    <None Remove="imgui-frag.hlsl.bytes" />
+    <None Remove="imgui-vertex.hlsl.bytes" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="letter-r.ico" />
+    <Content Include="Resources\cimgui.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Font\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\imgui-frag.hlsl.bytes" />
+    <EmbeddedResource Include="Resources\imgui-vertex.hlsl.bytes" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpVitamins.ShortGuid" Version="2.0.0" />
+    <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="3.4.17" />
+    <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Sons">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.dll</HintPath>
+    </Reference>
+    <Reference Include="Sons.Ai.Vail">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Ai.Vail.dll</HintPath>
+    </Reference>
+    <Reference Include="Sons.Atmosphere">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Atmosphere.dll</HintPath>
+    </Reference>
+    <Reference Include="Sons.Environment">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="Sons.Item">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Item.dll</HintPath>
+    </Reference>
+    <Reference Include="SonsSdk">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\net6\SonsSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
