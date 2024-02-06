@@ -1,11 +1,14 @@
-<p align="left">
- <img src="https://i.imgur.com/c6EXCpe.png" width="150" height="150" />
+<p align="center">
+ <img src="https://i.imgur.com/O1maQtJ.png" width="300" height="300" />
 </p>
 
-# RedNodeEditor
- Custom node editor to make mods for Sons of the Forest without programming knowledge.
- 
- ### FEATURES:
+---
+
+# RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
+    A custom node editor to make mods for Sons of the Forest without programming knowledge.
+
+---
+ ## FEATURES:
  - Built specifically for [**RedLoader**](https://github.com/ToniMacaroni/RedLoader/tree/main)
  - **Shareable projects**: share you mod projects with others
  - **Error detection**: detects common errors while and after building the mod
@@ -14,11 +17,16 @@
  - **Zoom**: zoomable graph editor
  - **100+** available nodes to use
 
-### Installation
-Download the latest **RedNodeEditor Setup** from the release section and install the program
+---
+## Installation
+1. Download the latest **RedNodeEditor Setup.exe** from the [release](https://github.com/ImAxel0/RedNodeEditor/releases) section
+2. Run the setup as administrator and install the application
+3. Open the app and start making mods
 
-### Requirements
+---
+## Requirements
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
 
+---
 https://github.com/ImAxel0/RedNodeEditor/assets/124681710/44678f2f-429a-43ab-b69b-11e4b16fa738
 
