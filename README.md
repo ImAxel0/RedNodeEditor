@@ -10,6 +10,7 @@
  - **Shareable projects**: share you mod projects with others
  - **Error detection**: detects common errors while and after building the mod
  - **Colored graph comments**: comment your node sections with what they do
+ - **Node descriptions**: each node when hovered shows a description about what it does or how should be used
  - **Zoom**: zoomable graph editor
  - **100+** available nodes to use
 
