@@ -16,11 +16,13 @@ public class SonsNode
     public Vector2 Position { get; set; }
 
     [XmlIgnore]
+    public Vector2 SizeOverride { get; set; } = Vector2.Zero;
+
+    [XmlIgnore]
     [JsonIgnore]
     public bool IsDragging { get; set; }
 
     [XmlIgnore]
-    [JsonIgnore]
     public string Name { get; set; }
 
     [XmlIgnore]
@@ -61,6 +63,7 @@ public class SonsNode
         Environment,
         Player,
         Inventory,
+        RangedWeapons,
         BaseNodes,
         Math,
         FlowChange,

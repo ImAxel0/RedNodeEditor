@@ -22,6 +22,7 @@ public class IfStatementNode : SonsNode
         Description = "If condition is true go to 1 (first output), else go to 2 (second output)";
         NodeType = NodeTypes.Flow;
         NodeCategory = NodeCategories.FlowChange;
+        SizeOverride = new(200, 180);
 
         Outputs.Add(new OutputNode());
 

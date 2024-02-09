@@ -8,7 +8,8 @@ public class Logger
 
     public static void Append(string message)
     {
-        Content += message + "\n";
+        Content += $"[{DateTime.Now.Hour}h:{DateTime.Now.Minute}m:{DateTime.Now.Second}s] {message}\n";
+        File.WriteAllText(Path.Combine(ProgramData.ExeFolder, "Latest.log"), Content);
     }
 
     public static void ClearLog()

@@ -1,5 +1,7 @@
 ﻿using ImGuiNET;
 using RedNodeEditor.EventNodes;
+using System.Runtime.ConstrainedExecution;
+using static Sons.Ai.Vail.VailStateMachineEvents;
 
 namespace RedNodeEditor;
 
@@ -60,6 +62,14 @@ public class ErrorSense
         List<string> cEventsNames = new();
         var customEventNodes = GraphEditor.GraphNodes.Where(node => node.GetType() == typeof(CustomEventNode));
         var callCustomEventNodes = GraphEditor.GraphNodes.Where(node => node.GetType() == typeof(CallCustomEventNode));
+
+        customEventNodes.ToList().ForEach(ev =>
+        {
+            CustomEventNode cEv = (CustomEventNode)ev;
+
+            if (customEventNodes.Any(x => (string)x.GetType().GetProperty("EventName").GetValue(x) == cEv.EventName && cEv != x))
+                TypeMsg.Add(new(Type.Error, $"A {cEv.Name} node has the same EventName as another one"));
+        });
 
         foreach (var callEventNode in callCustomEventNodes)
         {

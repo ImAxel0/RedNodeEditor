@@ -29,6 +29,7 @@ public class SubUnsubEventNode : SonsNode
         Name = "SubUnsubEvent";
         Description = "Subscribes (true) or unsubscribes (false) a CustomEvent node to one of the base nodes";
         NodeCategory = NodeCategories.FlowChange;
+        SizeOverride = new(270, 240);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });

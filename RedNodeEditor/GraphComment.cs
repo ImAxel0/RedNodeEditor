@@ -33,6 +33,7 @@ public class GraphComment
 
         ImGui.SetCursorPos(P1 * GraphEditor.Zoom);
         ImGui.BeginChild("##", size * GraphEditor.Zoom);
+        ImGui.SetWindowFontScale(GraphEditor.Zoom);
 
         var inputHeight = ImGui.GetFrameHeight();
         ImGui.SetNextItemWidth(rectEnd.X - rectStart.X - inputHeight);

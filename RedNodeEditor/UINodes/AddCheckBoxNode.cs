@@ -16,6 +16,7 @@ public class AddCheckBoxNode : SonsNode
         Description = $"Adds a checkbox to the panel. Outputs the panel id as a string to chain other ui elements.\n" +
             $"When the checkbox is clicked, the associated {nameof(EventName)} (CustomEvent node) will be called passing the bool value of the checkbox";
         NodeCategory = NodeCategories.UI;
+        SizeOverride = new(280, 250);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(PanelId) });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(Label) });

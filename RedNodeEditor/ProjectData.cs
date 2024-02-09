@@ -10,6 +10,8 @@ public class ProjectData
     public static string ProjectName = "unsaved";
     public List<SonsNode> GraphNodes = new();
     public List<GraphComment> GraphComments = new();
+    public List<string> VariablesId = new();
+    public Dictionary<string, Type> Variables = new();
 
     public static bool SaveProjectAt(string filePath, ProjectData project)
     {
@@ -26,6 +28,7 @@ public class ProjectData
         try
         {
             File.WriteAllText(filePath, json);
+            Logger.Append($"Project saved at: {filePath}");
         }
         catch (Exception ex)
         {
@@ -52,11 +55,18 @@ public class ProjectData
             ObjectCreationHandling = ObjectCreationHandling.Replace,
         };
 
-        // project folder (Environment.ProcessPath\\Projects) + ProjectName = filePath
-
         string json = JsonConvert.SerializeObject(project, settings);
         var filePath = Path.Combine(ProgramData.ProjectsFolder, ProjectName);
-        File.WriteAllText(filePath, json);
+
+        try
+        {
+            File.WriteAllText(filePath, json);
+            Logger.Append($"Project saved at: {filePath}");
+        }
+        catch (Exception ex)
+        {
+            User32.MessageBox(IntPtr.Zero, $"{ex.Message}", "Error saving the project", User32.MB_FLAGS.MB_OK | User32.MB_FLAGS.MB_ICONERROR | User32.MB_FLAGS.MB_TOPMOST);
+        }
     }
 
     public static bool LoadProject(string filePath)
@@ -76,20 +86,25 @@ public class ProjectData
             var projectData = JsonConvert.DeserializeObject<ProjectData>(json, settings);
             GraphEditor.GraphNodes = projectData.GraphNodes;
             GraphEditor.GraphComments = projectData.GraphComments;
+            VariablesManager.VariablesId = projectData.VariablesId;
+            VariablesManager.Variables = projectData.Variables;
             ProjectName = Path.GetFileName(filePath);
-            return true;
+            Logger.Append($"Project loaded from: {filePath}");
         }
         catch (Exception ex)
         {
             User32.MessageBox(IntPtr.Zero, $"{ex.Message}", "Error loading the project", User32.MB_FLAGS.MB_OK | User32.MB_FLAGS.MB_ICONERROR | User32.MB_FLAGS.MB_TOPMOST);
             return false;
         }
+        return true;
     }
 
     public static void CreateNewProject()
     {
         GraphEditor.DeleteAllNodes();
         GraphEditor.GraphComments.Clear();
+        VariablesManager.VariablesId.Clear();
+        VariablesManager.Variables.Clear();
 
         GraphEditor.GraphNodes.Add(new OnInitializeMod() { Position = new(20, 100) });
         GraphEditor.GraphNodes.Add(new OnSdkInitialized() { Position = new(20, 400) });

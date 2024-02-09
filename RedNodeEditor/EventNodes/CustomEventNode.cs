@@ -20,6 +20,7 @@ public class CustomEventNode : SonsNode
         Description = "A custom event with optional boolean and float outputs";
         NodeType = NodeTypes.Starter;
         NodeCategory = NodeCategories.FlowChange;
+        SizeOverride = new(270, 180);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });

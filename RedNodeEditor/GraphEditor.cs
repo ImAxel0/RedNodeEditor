@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using ImGuiNET;
 using RedNodeEditor.EventNodes;
-using RedNodeEditor.FlowNodes;
 using UnityEngine;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = System.Numerics.Vector3;
@@ -194,16 +193,16 @@ public class GraphEditor
 
     static Vector2 GetWhatSizeNodeShouldBe(SonsNode node, int propertiesCount)
     {
-        if (node.GetType() == typeof(IfStatementNode))
-            return new Vector2(200, 150);
+        if (node.SizeOverride != Vector2.Zero)
+            return node.SizeOverride;
 
-        if (propertiesCount == 0 && node.ArgsOut.Count <= 1 && node.ArgsIn.Count <= 1)
-            return new Vector2(250, 120);
+        //if (propertiesCount == 0 && node.ArgsOut.Count <= 1 && node.ArgsIn.Count <= 1)
+            //return new Vector2(250, 120);
 
         switch (node.ArgsIn.Count)
         {
             case 0:
-                return new Vector2(200, 100);
+                return new Vector2(230, 100);
             case 1:               
                 return node.ArgsIn.All(x => x.HasConnection && node.ArgsOut.Count <= 1) ? new Vector2(230, 120) : new Vector2(250, 180);
             case 2:
@@ -279,7 +278,7 @@ public class GraphEditor
         ImGui.PopFont();
         Drawings.NodeTooltip(node.Description);
         ImGui.Separator();
-        
+
         ImGui.Columns(2, $"Columns_{index}_{node.Name}", false);
         ImGui.SetColumnWidth(0, (GetWhatSizeNodeShouldBe(node, nodeProperties.Count()).X * Zoom) / 1.2f);
 
@@ -338,11 +337,9 @@ public class GraphEditor
         {
             if (node.ArgsIn[idx].HasConnection)
             {
-
-            }               
-            else if (node.NodeType != SonsNode.NodeTypes.Flow) 
-                DrawStaticInput(node, prop);
-
+                idx++; continue;
+            }
+            DrawStaticInput(node, prop);
             idx++;
         }
         
@@ -390,14 +387,6 @@ public class GraphEditor
 
         first.NextNode = second.SonsNode;
         second.PrevNode = first.SonsNode;
-        /*
-        if (second.SonsNode.GetType() == typeof(IfStatementNode) && FindBaseNodeOf(second.SonsNode)?.GetType() == typeof(CustomEventNode)) 
-        {
-            DisconnectNode(first, second);
-            User32.MessageBox(IntPtr.Zero, "IF Conditions aren't currently supported in CustomEvents", 
-                "Info", User32.MB_FLAGS.MB_ICONINFORMATION | User32.MB_FLAGS.MB_TOPMOST);      
-        }
-        */
     }
 
     public static void SwapNodes(OutputNode first, InputNode second)
@@ -456,7 +445,7 @@ public class GraphEditor
         {
             if (output.IsDragging)
             {
-                ImGui.SetMouseCursor(ImGuiMouseCursor.Hand);
+                Drawings.DrawCursor(Drawings.CursorType.InputOutput);
                 Drawings.DrawNodeLine(output.Position, ImGui.GetIO().MousePos);
 
                 GraphNodes.ForEach(graphNode => {
@@ -479,7 +468,7 @@ public class GraphEditor
 
             if (ArgOut.IsDragging)
             {
-                ImGui.SetMouseCursor(ImGuiMouseCursor.Hand);
+                Drawings.DrawCursor(Drawings.CursorType.Argument, ArgOut.Type);
                 Drawings.DrawNodeArgumentLine(ArgOut.Position, ImGui.GetIO().MousePos, Drawings.GetTypeColor(ArgOut.Type));
 
                 GraphNodes.ForEach(graphNode => {
@@ -517,6 +506,9 @@ public class GraphEditor
 
     static void DuplicateNode(SonsNode node)
     {
+        if (node.NodeType == SonsNode.NodeTypes.Variable)
+            return;
+
         var copy = CreateNewInstance(node);
         var added = AddToGraph(copy, new(50 + EditorScrollPos.X, 50 + EditorScrollPos.Y));
         if (added != null)
@@ -636,7 +628,8 @@ public class GraphEditor
 
     static void DrawStaticInput(SonsNode node, PropertyInfo property)
     {
-        ImGui.BeginChild($"Inputs_{node.Name}", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
+        ImGui.BeginChild($"Inputs_{node.Name}", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border, ImGuiWindowFlags.NoScrollbar 
+            | ImGuiWindowFlags.NoScrollWithMouse);
 
         if (property.PropertyType == typeof(int))
         {

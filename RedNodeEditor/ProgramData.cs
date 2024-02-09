@@ -1,7 +1,4 @@
-﻿using Il2CppSystem.IO;
-using Newtonsoft.Json;
-using System.Reflection;
-using Vanara.PInvoke;
+﻿using System.Reflection;
 using static RedNodeEditor.SonsNode;
 
 namespace RedNodeEditor;
@@ -21,7 +18,7 @@ public class ProgramData
         ExeFolder = Path.GetDirectoryName(Environment.ProcessPath);
         ProjectsFolder = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "Projects");
         ModsFolder = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "BuiltMods");
-        GameModsFolder = Path.Combine(PathTools.GetGamePath(), "Mods\\SNodeLoader\\Mods").Replace("SonsOfTheForest.exe", "");
+        GameModsFolder = Path.Combine(PathTools.GetGamePath(), "Mods\\RedNodeLoader\\Mods").Replace("SonsOfTheForest.exe", "");
 
         if (!Directory.Exists(ProjectsFolder))
             Directory.CreateDirectory(ProjectsFolder);
@@ -43,6 +40,9 @@ public class ProgramData
             SonsNode node = Activator.CreateInstance(nodeType) as SonsNode;
             if (node != null)
             {
+                if (node.NodeType == NodeTypes.Variable)
+                    continue;
+
                 foreach (NodeCategories enumValue in Enum.GetValues(typeof(NodeCategories)))
                 {
                     if (node.NodeCategory == enumValue)

@@ -6,8 +6,8 @@ public class AddSliderNode : SonsNode
 {
     public string PanelId { get; set; }
     public string Label { get; set; }
-    public Vector2 Range { get; set; }
-    public float Step { get; set; }
+    public Vector2 Range { get; set; } = new(0, 10);
+    public float Step { get; set; } = 1f;
 
     [IgnoreProperty]
     public string EventId { get; set; }
@@ -20,6 +20,7 @@ public class AddSliderNode : SonsNode
         Description = $"Adds a slider to the panel. Outputs the panel id as a string to chain other ui elements.\n" +
             $"When the slider is used, the associated {nameof(EventName)} (CustomEvent node) will be called passing the float value of the slider";
         NodeCategory = NodeCategories.UI;
+        SizeOverride = new(280, 350);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(PanelId) });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(Label) });

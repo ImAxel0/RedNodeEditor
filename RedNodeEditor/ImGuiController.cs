@@ -7,6 +7,7 @@ using ImGuiNET;
 using Veldrid;
 using Vanara.PInvoke;
 using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 
 namespace RedNodeEditor;
 
@@ -61,7 +62,7 @@ public class ImGuiController : IDisposable
         var io = ImGui.GetIO();
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
         io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
-        io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard;
+        //io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard;
         io.Fonts.Flags |= ImFontAtlasFlags.NoBakedLines;
 
         // load custom font

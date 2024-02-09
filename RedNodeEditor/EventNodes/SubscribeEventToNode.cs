@@ -28,6 +28,7 @@ public class SubscribeEventToNode : SonsNode
         Name = "SubscribeEventTo";
         Description = "Subscribes a CustomEvent node to one of the base nodes";
         NodeCategory = NodeCategories.FlowChange;
+        SizeOverride = new(270, 190);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });

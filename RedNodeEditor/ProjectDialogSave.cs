@@ -47,7 +47,9 @@ public class ProjectDialogSave
             ProjectData projectData = new()
             {
                 GraphNodes = GraphEditor.GraphNodes,
-                GraphComments = GraphEditor.GraphComments
+                GraphComments = GraphEditor.GraphComments,
+                VariablesId = VariablesManager.VariablesId,
+                Variables = VariablesManager.Variables
             };
             var saved = ProjectData.SaveProjectAt(Path.Combine(ProgramData.ProjectsFolder, _projectNameBuffer + ProgramData.ProjectExtension), projectData);
             if (saved)

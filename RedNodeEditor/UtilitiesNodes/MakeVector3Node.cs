@@ -9,6 +9,7 @@ public class MakeVector3Node : SonsNode
         Name = "MakeVector3";
         Description = "Makes a vector3 from three float input";
         NodeCategory = NodeCategories.Utilities;
+        SizeOverride = new(250, 170);
 
         ArgsIn.Add(new ArgIn { Type = typeof(float), ArgName = "x" });
         ArgsIn.Add(new ArgIn { Type = typeof(float), ArgName = "y" });

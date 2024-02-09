@@ -9,6 +9,7 @@ public class Vec3ToStringNode : SonsNode
         Name = "Vec3ToString";
         Description = "Convert vector3 input to string output";
         NodeCategory = NodeCategories.Utilities;
+        SizeOverride = new(250, 110);
 
         ArgsIn.Add(new ArgIn { Type = typeof(Vector3) });
         ArgsOut.Add(new ArgOut { Type = typeof(string) });

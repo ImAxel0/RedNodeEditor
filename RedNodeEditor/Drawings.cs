@@ -130,6 +130,28 @@ public class Drawings
         return new Vector4(0.00f, 0.66f, 0.95f, 1);
     }
 
+    public enum CursorType
+    {
+        InputOutput,
+        Argument,
+    }
+
+    public static void DrawCursor(CursorType curType, Type type = null)
+    {
+        ImGui.SetMouseCursor(ImGuiMouseCursor.None);
+        var mousePos = ImGui.GetIO().MousePos;
+
+        switch (curType)
+        {
+            case CursorType.InputOutput:
+                ImGui.GetForegroundDrawList().AddCircleFilled(mousePos, 7, ImGui.GetColorU32(new Vector4(1, 1, 1, .8f)), 1);
+                break;
+            case CursorType.Argument:              
+                ImGui.GetForegroundDrawList().AddCircleFilled(mousePos, 7, ImGui.GetColorU32(GetTypeColor(type)));
+                break;
+       }
+    }
+
     public static ImFontPtr Font14;
     public static ImFontPtr Font16;
     public static ImFontPtr Font18;

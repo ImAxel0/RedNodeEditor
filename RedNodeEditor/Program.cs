@@ -20,7 +20,7 @@ class Program
         ProgramData.Initialize();
 
         VeldridStartup.CreateWindowAndGraphicsDevice(
-            new WindowCreateInfo(50, 50, 1280, 720, WindowState.Maximized, $"RedNodeEditor (Alpha)"),
+            new WindowCreateInfo(50, 50, 1280, 720, WindowState.Maximized, $"RedNodeEditor (Beta)"),
             new GraphicsDeviceOptions(true, null, true, ResourceBindingModel.Improved, true, true),
             out _window,
             out _gd);
@@ -119,6 +119,8 @@ class Program
                 {
                     GraphNodes = GraphEditor.GraphNodes,
                     GraphComments = GraphEditor.GraphComments,
+                    VariablesId = VariablesManager.VariablesId,
+                    Variables = VariablesManager.Variables
                 };
                 ProjectData.SaveProject(projectData);
             }
@@ -165,7 +167,7 @@ class Program
                 }
             }
             ImGui.Checkbox("Build to mods folder", ref ProgramData.OutputToGameFolder);
-            Drawings.NodeTooltip("If checked, outputs the mod file in the SonsOfTheForest/Mods/RedNodeLoader/Mods folder");
+            Drawings.NodeTooltip("If checked and the directory exist, outputs the mod file in the SonsOfTheForest/Mods/RedNodeLoader/Mods folder");
 
             ImGui.EndMenu();
         }
@@ -183,7 +185,7 @@ class Program
         if (ImGui.BeginMenu("About"))
         {
             ImGui.Text("Application");
-            Drawings.NodeTooltip("RedNodeEditor version 0.1.0 (Alpha)\nDeveloped by Im-_-Axel");
+            Drawings.NodeTooltip("RedNodeEditor v0.1.0 (Beta)\nDeveloped by Im-_-Axel");
 
             if (ImGui.MenuItem("Source code"))
                 Process.Start(new ProcessStartInfo("https://github.com/") { UseShellExecute = true });

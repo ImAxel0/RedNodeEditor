@@ -139,16 +139,14 @@ public class ModBuilder
     /// 
     /// </summary>
     /// <param name="baseType"></param>
-    /// <param name="baseNode"> Mainly used to disinguish base nodes of the same type as CustomEvents</param>
+    /// <param name="baseNode"> Mainly used to distinguish base nodes of the same type as CustomEvents</param>
     static void PopulateIfStatements(Type baseType, object baseNode)
     {
         var ifNodes = GraphEditor.GraphNodes.Where(node => node.GetType() == typeof(IfStatementNode) && GraphEditor.FindBaseNodeOf(node).GetType() == baseType 
         && GraphEditor.FindBaseNodeOf(node) == (SonsNode)baseNode);
 
         foreach (var ifNode in ifNodes)
-        {
             PopulateIfStatement(ifNode);
-        }
     }
 
     static void PopulateIfStatement(SonsNode ifStatementNode)

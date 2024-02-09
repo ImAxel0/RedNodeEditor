@@ -14,6 +14,7 @@ public class NodeList
         { SonsNode.NodeCategories.BaseNodes, new Dictionary<string, SonsNode>() },
         { SonsNode.NodeCategories.Others, new Dictionary<string, SonsNode>() },
         { SonsNode.NodeCategories.Actors, new Dictionary<string, SonsNode>() },
+        { SonsNode.NodeCategories.RangedWeapons, new Dictionary<string, SonsNode>() },
         { SonsNode.NodeCategories.Math, new Dictionary<string, SonsNode>() },
         { SonsNode.NodeCategories.FlowChange, new Dictionary<string, SonsNode>() },
         { SonsNode.NodeCategories.Input, new Dictionary<string, SonsNode>() },
@@ -49,7 +50,7 @@ public class NodeList
         if (OrderedCategoryNodesPair.Count == 0)
             OrderCategoriesAlphabetically();
 
-        ImGui.BeginChild("MainNodeList", new (ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y - 200), ImGuiChildFlags.ResizeY);
+        ImGui.BeginChild("MainNodeList", new (ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y / 2), ImGuiChildFlags.ResizeY);
 
         foreach (var nodeCategory in OrderedCategoryNodesPair)
         {
@@ -71,28 +72,37 @@ public class NodeList
         }
         ImGui.EndChild();
 
-        if (ImGui.BeginCombo("ErrorList/Log/Variables", selectedOpt))
+        if (ImGui.BeginCombo("Variables/ErrorList/Log", SelectedOption.ToString()))
         {
-            foreach (var opt in options)
+            foreach (var opt in Enum.GetValues(typeof(Options)))
             {
-                if (ImGui.Selectable(opt))
-                    selectedOpt = opt;
+                if (ImGui.Selectable(opt.ToString()))
+                    SelectedOption = (Options)opt;
             }
             ImGui.EndCombo();
         }
 
-        switch (selectedOpt)
+        switch (SelectedOption)
         {
-            case "ErrorList":
+            case Options.ErrorList:
                 ErrorSense.Render();
                 break;
-            case "Log":
+            case Options.Log:
                 Logger.Render();
+                break;
+            case Options.Variables:
+                VariablesManager.Render();
                 break;
         }   
         ImGui.EndChild();
     }
 
-    static string[] options = { "ErrorList", "Log" };
-    static string selectedOpt = "ErrorList";
+    public static Options SelectedOption = Options.Variables;
+
+    public enum Options
+    {
+        Variables,
+        ErrorList,
+        Log
+    }
 }

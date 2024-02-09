@@ -16,6 +16,7 @@ public class AddButtonNode : SonsNode
         Description = $"Adds a button to the panel. When clicked the CustomEvent node of the given {nameof(EventName)} will be executed." +
             $"Outputs the panel id as a string to chain other ui elements";
         NodeCategory = NodeCategories.UI;
+        SizeOverride = new(280, 250);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(PanelId) });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(Label) });

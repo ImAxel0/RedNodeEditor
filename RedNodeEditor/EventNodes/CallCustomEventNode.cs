@@ -12,6 +12,7 @@ public class CallCustomEventNode : SonsNode
         Name = "CallCustomEvent";
         Description = "Calls a custom event";
         NodeCategory = NodeCategories.FlowChange;
+        SizeOverride = new(270, 130);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });

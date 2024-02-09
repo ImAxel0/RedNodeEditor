@@ -8,7 +8,7 @@ public class SetOverrideSortingNode : SonsNode
     public SetOverrideSortingNode()
     {
         Name = "SetOverrideSorting";
-
+        Description = "Sets the Z order of the panel. Panels with higher number will display above panels having lower number";
         NodeCategory = NodeCategories.UI;
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(PanelId) });

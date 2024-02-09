@@ -19,6 +19,7 @@ public class ImGuiTheme
         ImGuiStyle.ChildRounding = _childRounding;
         ImGuiStyle.FrameRounding = _frameRounding;
         ImGuiStyle.FrameBorderSize = _frameBorder;
+        ImGuiStyle.Colors[(int)ImGuiCol.Text] = Vector4.One;
         ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = _childBgColor;
         ImGuiStyle.Colors[(int)ImGuiCol.Border] = new(.23f, .23f, .23f, 1);
         ImGuiStyle.Colors[(int)ImGuiCol.Header] = _headersColor;
@@ -55,7 +56,22 @@ public class ImGuiTheme
         ImGuiStyle.ChildRounding = 5;
         ImGuiStyle.FrameRounding = 5;
         ImGuiStyle.FrameBorderSize = 1;
-        Vector4 col = (node.NodeType == SonsNode.NodeTypes.Starter) ? new(0.48f, 0.16f, 0.16f, .8f) : new(0.24f, 0.24f, 0.24f, .8f);
+
+        Vector4 col;
+        switch (node.NodeType)
+        {
+            case SonsNode.NodeTypes.Starter:
+                col = new(0.48f, 0.16f, 0.16f, .8f);
+                break;
+            case SonsNode.NodeTypes.Variable:
+                col = Drawings.GetTypeColor(node.ArgsOut[0].Type);
+                col = new(col.X, col.Y, col.Z, .2f);
+                break;
+            default:
+                col = new(0.24f, 0.24f, 0.24f, .8f);
+                break;
+        }
+
         ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = col;
         ImGuiStyle.Colors[(int)ImGuiCol.Border] = new Vector4(0, 0, 0, 1);
         ImGuiStyle.Colors[(int)ImGuiCol.Header] = _headersColor;
@@ -70,8 +86,8 @@ public class ImGuiTheme
     {
         ImGuiStyle.ChildRounding = _childRounding;
         ImGuiStyle.FrameRounding = _frameRounding;
-        ImGuiStyle.FrameBorderSize = _frameBorder;
-        ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new(.1f, .1f, .1f, 1);
+        ImGuiStyle.FrameBorderSize = 1;
+        ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new(0.25f, 0.25f, 0.25f, 1);
         ImGuiStyle.Colors[(int)ImGuiCol.Border] = new(.23f, .23f, .23f, 1);
         ImGuiStyle.Colors[(int)ImGuiCol.Header] = _headersColor;
         ImGuiStyle.Colors[(int)ImGuiCol.HeaderHovered] = _headersColor * 1.2f;
