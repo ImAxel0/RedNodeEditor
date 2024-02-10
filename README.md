@@ -13,7 +13,10 @@
  - **Colored graph comments**: comment your node sections with what they do
  - **Node descriptions**: each node when hovered shows a description about what it does or how should be used
  - **Zoom**: zoomable graph editor
- - **100+** available nodes to use
+ - **Variables**: store values in containers to later use them
+ - **Custom events**: alter the node flow and keeps a tidy editor visual
+ - **Generic nodes**: expand the modding capabilities beyond the provided nodes
+ - **200+** available nodes to use
 
 ---
 ## Installation
