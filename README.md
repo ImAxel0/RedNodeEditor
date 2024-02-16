@@ -3,10 +3,12 @@
 </p>
 
 # RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
-  **A custom node editor to make mods for Sons of the Forest without programming knowledge**
+  **A custom node editor to make mods for Sons of the Forest without programming knowledge** 
+  
+  :orange_book: [Documentation](https://app.gitbook.com/o/NHbK8lCm0flXIHLC9Bun/s/16eHiWrLvkdzPgx4n88e/) :orange_book:
 
 ---
- ## FEATURES:
+ ## FEATURES :star:
  - Made specifically for [**RedLoader**](https://github.com/ToniMacaroni/RedLoader/tree/main)
  - **Shareable projects**: share you mod projects with others
  - **Error detection**: detects common errors during the mod making process
@@ -19,7 +21,7 @@
  - **200+** available nodes to use
 
 ---
-## Installation
+## Installation :arrow_down:
 1. Download the latest **RedNodeEditor Setup.exe** from the [release](https://github.com/ImAxel0/RedNodeEditor/releases) section
 2. Run the setup as administrator and install the application
 3. Open the app and start making mods
@@ -32,11 +34,11 @@ Mod files end with `.rmod` extension
 > The custom extensions are only there for clarity, in reality they are just .json and .xml respectively
 
 ---
-## Requirements
+## Requirements :warning:
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
 
 ---
-## FAQ
+## FAQ :question:
 ### **Can I make all type of mods with this?**
 
 While it's surely not possible to make all types of mods, it should offer a vast arsenal to make easy and more complex type of mods like the two provided mod examples. 
