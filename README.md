@@ -36,8 +36,27 @@ Mod files end with `.rmod` extension
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
 
 ---
-![RedNodeEditor](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/1ae6cbf8-b80c-407c-914c-de3c39e2b87d)
+## FAQ
+### **Can I make all type of mods with this?**
+
+While it's surely not possible to make all types of mods, it should offer a vast arsenal to make easy and more complex type of mods like the two provided mod examples. 
+By providing both premade and generic nodes it pretty much depends on the user capabilities and understanding of the tool.
+
+### **Can I still make something out of this if I don't know how to program and/or unity game development?**
+
+Absolutely yes! Some nodes may sound unfamiliar like the **Unity** node category, but a big chunk of them are self-explanatory and are shortly described when hovered.
+
+### **How is this related to RedLoader?**
+
+The application was built with a focus on RedLoader by using it's functionalities and making nodes based on it. The mods themselves are read and resolved by a RedLoader mod (*RedNodeLoader*), which executes each node accordingly.
+
+### **Will an eventual application/loader update break my mods?**
+
+Depending if the mod used some nodes which where greatly changed in functionalities the mod may break or not. (Reverting to an older version of the loader is always possible to keep using it).
+
 ---
+![RedNodeEditor](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/1ae6cbf8-b80c-407c-914c-de3c39e2b87d)
+
 ### Plane mod example
 ![PlaneMod](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/32bbeb7d-b899-4f5e-b43c-08c7babbc741)
 
