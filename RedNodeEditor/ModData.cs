@@ -2,6 +2,7 @@
 
 public class ModData
 {
+    public string AppVersion { get; set; }
     public string ModName { get; set; }
     public string ModAuthor { get; set; }
     public string ModVersion { get; set; }

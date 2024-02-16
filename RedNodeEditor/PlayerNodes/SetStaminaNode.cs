@@ -1,4 +1,4 @@
-﻿namespace RedNodeEditor;
+﻿namespace RedNodeEditor.PlayerNodes;
 
 public class SetStaminaNode : SonsNode
 {

@@ -16,6 +16,9 @@ public class GraphComment
     [JsonIgnore]
     public bool IsResizing;
 
+    [JsonIgnore]
+    public bool IsDragging;
+
     public bool IsCreation = true;
 
     public void Render()
@@ -49,14 +52,22 @@ public class GraphComment
         ImGui.ColorEdit4("##", ref BgColor, ImGuiColorEditFlags.NoAlpha | ImGuiColorEditFlags.NoOptions |
             ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.NoSidePreview | ImGuiColorEditFlags.PickerHueWheel);
 
+        if (ImGui.IsItemHovered(ImGuiHoveredFlags.RectOnly) && ImGui.IsMouseDown(ImGuiMouseButton.Right))
+            IsDragging = true;
+        else if (ImGui.IsMouseReleased(ImGuiMouseButton.Right) || !GraphEditor.IsEditorHovered)
+            IsDragging = false;
+
+        if (IsDragging)
+        {
+            P1 += ImGui.GetIO().MouseDelta / GraphEditor.Zoom;
+            P2 += ImGui.GetIO().MouseDelta / GraphEditor.Zoom;
+        }
+
         ImGui.EndChild();
        
         if (ImGui.IsMouseHoveringRect(rectStart + new Vector2(0, inputHeight), rectEnd) 
             && ImGui.IsMouseDown(ImGuiMouseButton.Left) && !GraphEditor.DraggingNode && !GraphEditor.DraggingOutput && !IsResizing)
         {
-            //P1 += ImGui.GetIO().MouseDelta / GraphEditor.Zoom;
-            //P2 += ImGui.GetIO().MouseDelta / GraphEditor.Zoom;
-
             ImGui.GetWindowDrawList().AddRectFilled(rectStart, rectEnd, ImGui.GetColorU32(BgColor), 5);
             if (ImGui.IsKeyPressed(ImGuiKey.Delete, false))
                 GraphEditor.GraphComments.Remove(this);

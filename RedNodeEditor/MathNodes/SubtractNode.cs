@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class SubtractNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class SubtractNode : SonsNode
 
     public SubtractNode()
     {
-        Name = "Subtract (-)";
+        Name = $"Subtract {FontAwesome6.SquareMinus}";
         Description = "Subtracts second from first and output the result";
         NodeCategory = NodeCategories.Math;
 

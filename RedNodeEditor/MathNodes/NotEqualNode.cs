@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class NotEqualNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class NotEqualNode : SonsNode
 
     public NotEqualNode()
     {
-        Name = "NotEqual (!=)";
+        Name = $"NotEqual {FontAwesome6.NotEqual}";
         Description = "Returns true if the two numeric values aren't the same";
         NodeCategory = NodeCategories.Math;
 

@@ -1,10 +1,12 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class IsNotNullNode : SonsNode
 {
     public IsNotNullNode()
     {
-        Name = "IsNotNullNode (!?)";
+        Name = $"IsNotNullNode {FontAwesome6.Exclamation}{FontAwesome6.Question}";
         Description = "Returns true if passed object is not null, else return false";
         NodeCategory = NodeCategories.Math;
         SizeOverride = new(250, 120);

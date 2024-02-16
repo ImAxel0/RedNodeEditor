@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using IconFonts;
+using System.Numerics;
 
 namespace RedNodeEditor.MathNodes
 {
@@ -9,7 +10,7 @@ namespace RedNodeEditor.MathNodes
 
         public SubtractVec3Node()
         {
-            Name = "SubtractVec3 (-) (-) (-)";
+            Name = $"SubtractVec3 {FontAwesome6.SquareMinus} {FontAwesome6.SquareMinus} {FontAwesome6.SquareMinus}";
             Description = "Subtracts second from first and output the result";
             NodeCategory = NodeCategories.Math;
 

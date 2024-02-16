@@ -4,12 +4,14 @@ using System.Diagnostics;
 using Veldrid.StartupUtilities;
 using ImGuiNET;
 using System.Numerics;
+using Vanara.PInvoke;
+using IconFonts;
 
 namespace RedNodeEditor;
 
 class Program
 {
-    private static Sdl2Window _window;
+    public static Sdl2Window _window;
     private static GraphicsDevice _gd;
     private static CommandList _cl;
     private static ImGuiController _controller;
@@ -21,7 +23,7 @@ class Program
 
         VeldridStartup.CreateWindowAndGraphicsDevice(
             new WindowCreateInfo(50, 50, 1280, 720, WindowState.Maximized, $"RedNodeEditor (Beta)"),
-            new GraphicsDeviceOptions(true, null, true, ResourceBindingModel.Improved, true, true),
+            new GraphicsDeviceOptions(false, null, true, ResourceBindingModel.Improved, true, true),
             out _window,
             out _gd);
         _window.Resized += () =>
@@ -76,6 +78,7 @@ class Program
     {
         ImGui.SetNextWindowPos(new(0, 0));
         ImGui.SetNextWindowSize(ImGui.GetIO().DisplaySize);
+
         ImGui.Begin("MainWindow", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse
             | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.MenuBar);
 
@@ -87,10 +90,15 @@ class Program
 
         GraphEditor.Render();
 
+        if (ImGuiNative.igGetMouseCursor() == ImGuiMouseCursor.Arrow && ImGui.IsMouseHoveringRect(Vector2.Zero, ImGui.GetIO().DisplaySize))
+            //Drawings.DrawCursor(Drawings.CursorType.Default);
+
         ProjectDialogLoad.Render();
         ProjectDialogSave.Render();
 
         ImGui.End();
+
+        var s = ImGui.GetIO().DisplaySize;
 
         ShortcutHelp.ShortcutLisener();
     }
@@ -101,7 +109,7 @@ class Program
 
         ImGui.TextDisabled(ProjectData.ProjectName);
 
-        if (ImGui.BeginMenu("File"))
+        if (ImGui.BeginMenu($"{FontAwesome6.File} File"))
         {
             if (ImGui.MenuItem("New Project", "Ctrl+N"))
             {
@@ -132,7 +140,13 @@ class Program
             ImGui.EndMenu();
         }
 
-        if (ImGui.BeginMenu("Data"))
+        if (ImGui.BeginMenu($"{FontAwesome6.ArrowsToEye} View"))
+        {
+            ImGui.Checkbox("Hide Inputs/Outputs in node list", ref NodeList.HideArguments);
+            ImGui.EndMenu();
+        }
+
+        if (ImGui.BeginMenu($"{FontAwesome6.Folder} Data"))
         {
             if (ImGui.MenuItem("Open projects folder"))
             {
@@ -153,10 +167,26 @@ class Program
                     Verb = "open"
                 });
             }
+
+            if (ImGui.MenuItem("Open game mods folder"))
+            {
+                if (string.IsNullOrEmpty(ProgramData.GameModsFolder))
+                    User32.MessageBox(IntPtr.Zero, "No RedNodeLoader/mods folder found. Did you install RedNodeLoader?");
+                else
+                {
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = ProgramData.GameModsFolder,
+                        UseShellExecute = true,
+                        Verb = "open"
+                    });
+                }
+            }
+
             ImGui.EndMenu();
         }
 
-        if (ImGui.BeginMenu("Build"))
+        if (ImGui.BeginMenu($"{FontAwesome6.Code} Build"))
         {
             if (ImGui.MenuItem("Build Mod", "Ctrl+B"))
             {
@@ -172,7 +202,7 @@ class Program
             ImGui.EndMenu();
         }
 
-        if (ImGui.BeginMenu("Help"))
+        if (ImGui.BeginMenu($"{FontAwesome6.CircleInfo} Help"))
         {
             ImGui.Text("Shortcuts");
             Drawings.NodeTooltip(ShortcutHelp.ShortcutInfo);
@@ -182,10 +212,10 @@ class Program
 
             ImGui.EndMenu();
         }
-        if (ImGui.BeginMenu("About"))
+        if (ImGui.BeginMenu($"{FontAwesome6.CircleUser} About"))
         {
             ImGui.Text("Application");
-            Drawings.NodeTooltip("RedNodeEditor v0.1.0 (Beta)\nDeveloped by Im-_-Axel");
+            Drawings.NodeTooltip($"RedNodeEditor v{ProgramData.AppVersion} (Beta)\nDeveloped by Im-_-Axel");
 
             if (ImGui.MenuItem("Source code"))
                 Process.Start(new ProcessStartInfo("https://github.com/") { UseShellExecute = true });

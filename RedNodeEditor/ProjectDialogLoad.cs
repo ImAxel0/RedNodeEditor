@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
 
 namespace RedNodeEditor;
 
@@ -17,13 +18,13 @@ public class ProjectDialogLoad
             return;
         }
 
-        ImGui.OpenPopup("Choose a mod project to load");
+        ImGui.OpenPopup($"Choose a mod project to load {FontAwesome6.FolderOpen}");
         ImGui.SetNextWindowSize(new(600, 400));
         ImGui.PushFont(Drawings.Font20);
-        ImGui.BeginPopupModal("Choose a mod project to load", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
+        ImGui.BeginPopupModal($"Choose a mod project to load {FontAwesome6.FolderOpen}", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
         ImGui.PopFont();
 
-        ImGui.InputText("Search project", ref _searchBuffer, 1000);
+        ImGui.InputText($"Search project {FontAwesome6.MagnifyingGlass}", ref _searchBuffer, 1000);
         if (_kbFocus)
         {
             ImGui.SetKeyboardFocusHere(-1);

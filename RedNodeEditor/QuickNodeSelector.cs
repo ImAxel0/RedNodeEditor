@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
 using System.Numerics;
 
 namespace RedNodeEditor;
@@ -38,7 +39,7 @@ public class QuickNodeSelector
         ImGui.BeginChild("QuickNodeSelector", new(300, 600), ImGuiChildFlags.Border);
 
         ImGui.BeginChild("QuickNodeSelectorTopBar", new(ImGui.GetContentRegionAvail().X, 25));
-        ImGui.InputText("Search", ref SearchBuffer, 1000);
+        ImGui.InputText($"Search {FontAwesome6.MagnifyingGlass}", ref SearchBuffer, 1000);
         if (_focus)
         {
             ImGui.SetKeyboardFocusHere(-1);

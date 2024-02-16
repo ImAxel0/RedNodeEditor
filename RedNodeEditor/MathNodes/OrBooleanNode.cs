@@ -1,10 +1,12 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class OrBooleanNode : SonsNode
 {
     public OrBooleanNode()
     {
-        Name = "OR Boolean (||)";
+        Name = $"OR Boolean {FontAwesome6.GripLinesVertical}";
         Description = "Returns true if atleast one of the inputs is true";
         NodeCategory = NodeCategories.Math;
         SizeOverride = new(250, 140);

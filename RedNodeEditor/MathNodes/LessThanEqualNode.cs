@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class LessThanEqualNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class LessThanEqualNode : SonsNode
 
     public LessThanEqualNode()
     {
-        Name = "LessThanEqual (<=)";
+        Name = $"LessThanEqual {FontAwesome6.LessThanEqual}";
         Description = "Returns true if first is less or equal to second";
         NodeCategory = NodeCategories.Math;
 

@@ -1,9 +1,9 @@
 ﻿using System.Xml.Serialization;
 using System.Reflection;
-using RedNodeEditor.FlowNodes;
-using RedNodeEditor.RedNodes;
 using Vanara.PInvoke;
+using RedNodeEditor.RedNodes;
 using RedNodeEditor.EventNodes;
+using RedNodeEditor.FlowNodes;
 
 namespace RedNodeEditor;
 
@@ -52,6 +52,7 @@ public class ModBuilder
 
         ModData modData = new()
         {
+            AppVersion = ProgramData.AppVersion,
             ModName = ProjectData.ProjectName.Replace(ProgramData.ProjectExtension, string.Empty),
             ModAuthor = "Axel",
             ModVersion = "1.0.0",

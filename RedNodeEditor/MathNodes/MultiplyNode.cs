@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class MultiplyNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class MultiplyNode : SonsNode
 
     public MultiplyNode()
     {
-        Name = "Multiply (*)";
+        Name = $"Multiply {FontAwesome6.Asterisk}";
         Description = "Multiplies two numeric values and output the result";
         NodeCategory = NodeCategories.Math;
 

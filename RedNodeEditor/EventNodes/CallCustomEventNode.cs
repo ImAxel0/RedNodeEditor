@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.EventNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.EventNodes;
 
 public class CallCustomEventNode : SonsNode
 {
@@ -9,7 +11,7 @@ public class CallCustomEventNode : SonsNode
 
     public CallCustomEventNode()
     {
-        Name = "CallCustomEvent";
+        Name = $"CallCustomEvent {FontAwesome6.SquarePhone}";
         Description = "Calls a custom event";
         NodeCategory = NodeCategories.FlowChange;
         SizeOverride = new(270, 130);

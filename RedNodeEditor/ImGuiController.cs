@@ -7,7 +7,6 @@ using ImGuiNET;
 using Veldrid;
 using Vanara.PInvoke;
 using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
 
 namespace RedNodeEditor;
 
@@ -52,7 +51,7 @@ public class ImGuiController : IDisposable
     /// <summary>
     /// Constructs a new ImGuiController.
     /// </summary>
-    public ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
+    public unsafe ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
     {
         _gd = gd;
         _windowWidth = width;
@@ -69,17 +68,62 @@ public class ImGuiController : IDisposable
         Utilities.TryGetEmbeddedResourceBytes("Roboto-Regular", out var fontData);
         GCHandle pinnedArray = GCHandle.Alloc(fontData, GCHandleType.Pinned);
         IntPtr pointer = pinnedArray.AddrOfPinnedObject();
-        Drawings.Font16 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 16);
-        Drawings.Font14 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 14);
-        Drawings.Font18 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 18);
-        Drawings.Font20 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 20);
-        Drawings.Font22 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 22);
+        Drawings.Font16 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 16); LoadIcons(14);
+        Drawings.Font14 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 14); LoadIcons(14);
+        Drawings.Font18 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 18); LoadIcons(14);
+        Drawings.Font20 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 20); LoadIcons(14);
+        Drawings.Font22 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 22); LoadIcons(14);
         pinnedArray.Free();
+
+        ImFontConfig* config = io.Fonts.ConfigData[0];
+        config->OversampleH = 5;
+        config->OversampleV = 5;
+
+        ImFontConfig* config2 = io.Fonts.ConfigData[2];
+        config2->OversampleH = 5;
+        config2->OversampleV = 5;
+
+        ImFontConfig* config3 = io.Fonts.ConfigData[3];
+        config3->OversampleH = 5;
+        config3->OversampleV = 5;
 
         CreateDeviceResources(gd, outputDescription);
         SetPerFrameImGuiData(1f / 60f);
         ImGui.NewFrame();
         _frameBegun = true;
+    }
+
+    static unsafe void LoadIcons(float fontSize)
+    {
+        ImFontConfigPtr icons_config = ImGuiNative.ImFontConfig_ImFontConfig();
+        icons_config.MergeMode = true;                      // merge the glyph ranges into the default font
+        icons_config.PixelSnapH = true;                     // don't try to render on partial pixels
+        icons_config.FontDataOwnedByAtlas = false;           // the font atlas does not own this font data
+
+        icons_config.GlyphMaxAdvanceX = float.MaxValue;
+        icons_config.RasterizerMultiply = 1.0f;
+        icons_config.OversampleH = 2;
+        icons_config.OversampleV = 1;
+
+        ushort[] IconRanges = new ushort[3];
+        IconRanges[0] = IconFonts.FontAwesome6.IconMin;
+        IconRanges[1] = IconFonts.FontAwesome6.IconMax;
+        IconRanges[2] = 0;
+
+        fixed (ushort* range = &IconRanges[0])
+        {
+            // this unmanaged memory must remain allocated for the entire run of rlImgui
+            IconFonts.FontAwesome6.IconFontRanges = Marshal.AllocHGlobal(6);
+            Buffer.MemoryCopy(range, IconFonts.FontAwesome6.IconFontRanges.ToPointer(), 6, 6);
+            icons_config.GlyphRanges = (IntPtr)(ushort*)IconFonts.FontAwesome6.IconFontRanges.ToPointer();
+
+            byte[] fontDataBuffer = Convert.FromBase64String(IconFonts.FontAwesome6.IconFontData);
+
+            fixed (byte* buffer = fontDataBuffer)
+            {
+                var fontPtr = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(new IntPtr(buffer), fontDataBuffer.Length, fontSize, icons_config, IconFonts.FontAwesome6.IconFontRanges);
+            }
+        }
     }
 
     public void WindowResized(int width, int height)
@@ -301,7 +345,7 @@ public class ImGuiController : IDisposable
             0);
         _fontTextureView = gd.ResourceFactory.CreateTextureView(_fontTexture);
 
-        io.Fonts.ClearTexData();
+        io.Fonts.ClearTexData();      
     }
 
     /// <summary>

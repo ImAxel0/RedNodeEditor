@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using IconFonts;
+using System.Numerics;
 
 namespace RedNodeEditor.MathNodes;
 
@@ -9,7 +10,7 @@ public class AddVec3Node : SonsNode
 
     public AddVec3Node()
     {
-        Name = "AddVec3 (+) (+) (+)";
+        Name = $"AddVec3 {FontAwesome6.SquarePlus} {FontAwesome6.SquarePlus} {FontAwesome6.SquarePlus}";
         Description = "Sum two vector 3 and output the result";
         NodeCategory = NodeCategories.Math;
 

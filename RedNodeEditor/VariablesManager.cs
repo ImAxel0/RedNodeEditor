@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
 using RedNodeEditor.VariablesNodes;
 using System.Numerics;
 using Vanara.PInvoke;
@@ -34,8 +35,10 @@ public class VariablesManager
 
     static void RenderTopInputs()
     {
-        ImGui.InputText("Name", ref NameBuffer, 1000, ImGuiInputTextFlags.CharsNoBlank);
+        ImGui.Columns(3, "", false);
 
+        ImGui.InputTextWithHint("Name", "...", ref NameBuffer, 1000, ImGuiInputTextFlags.CharsNoBlank);
+        ImGui.NextColumn();
         if (ImGui.BeginCombo("Type", SelectedType.Name))
         {
             foreach (var varType in VariableTypes)
@@ -45,7 +48,7 @@ public class VariablesManager
             }
             ImGui.EndCombo();
         }
-
+        ImGui.NextColumn();
         if (ImGui.Button("Add", new(ImGui.GetContentRegionAvail().X, 25)))
         {
             if (string.IsNullOrEmpty(NameBuffer))
@@ -64,12 +67,13 @@ public class VariablesManager
                 User32.MessageBox(IntPtr.Zero, "Can't add a variable with the same name as another one", "Error",
                     User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
         }
+        ImGui.Columns(1);
     }
 
     static void RenderVariables()
     {
         int idx = 0;
-        foreach (var variable in Variables)
+        foreach (var variable in Variables.ToList())
         {
             ImGuiTheme.ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new(0.13f, 0.13f, 0.13f, 1);
             ImGui.BeginChild(idx.ToString(), new(ImGui.GetContentRegionAvail().X, ImGui.CalcTextSize(variable.Key).Y * 2), ImGuiChildFlags.Border);
@@ -229,9 +233,10 @@ public class VariablesManager
         ImGuiTheme.LoggerTheme();
 
         ImGui.PushFont(Drawings.Font20);
-        ImGui.SeparatorText("Variables");
+        ImGui.SeparatorText($"Variables {FontAwesome6.SquareRootVariable}");
         ImGui.PopFont();
 
+        ImGuiTheme.ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new Vector4(0.2f, 0.22f, 0.23f, 1);
         ImGui.BeginChild("VariablesWindow", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border);
 
         RenderTopInputs();

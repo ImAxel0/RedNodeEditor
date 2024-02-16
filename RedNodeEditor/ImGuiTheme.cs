@@ -8,20 +8,23 @@ public class ImGuiTheme
     public static ImGuiStylePtr ImGuiStyle;
 
     static float _childRounding = 0;
-    static float _frameRounding = 0;
+    static float _frameRounding = 2;
     static float _frameBorder = 0;
-    static Vector4 _childBgColor = new(0.2f, 0.2f, 0.2f, 1);
-    static Vector4 _headersColor = new(0.3f, 0.3f, 0.3f, 1);
-    static Vector4 _frameColor = new(0.13f, 0.13f, 0.13f, 1);
+    static Vector4 _textColor = new(0.9f, 0.9f, 0.9f, 1);
+    static Vector4 _childBgColor = new(0.15f, 0.15f, 0.16f, 1); // 0.2f
+    static Vector4 _headersColor = new(0.15f, 0.15f, 0.16f, 1); // 0.3f
+    static Vector4 _frameColor = new(0.10f, 0.10f, 0.10f, 1);
+    static Vector4 _borderColor = new(0.2f, 0.2f, 0.2f, 1);
 
     public static void ApplyTheme()
     {
         ImGuiStyle.ChildRounding = _childRounding;
         ImGuiStyle.FrameRounding = _frameRounding;
         ImGuiStyle.FrameBorderSize = _frameBorder;
-        ImGuiStyle.Colors[(int)ImGuiCol.Text] = Vector4.One;
+        ImGuiStyle.ScrollbarRounding = _frameBorder;
+        ImGuiStyle.Colors[(int)ImGuiCol.Text] = _textColor;
         ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = _childBgColor;
-        ImGuiStyle.Colors[(int)ImGuiCol.Border] = new(.23f, .23f, .23f, 1);
+        ImGuiStyle.Colors[(int)ImGuiCol.Border] = _borderColor;
         ImGuiStyle.Colors[(int)ImGuiCol.Header] = _headersColor;
         ImGuiStyle.Colors[(int)ImGuiCol.HeaderHovered] = _headersColor * 1.2f;
         ImGuiStyle.Colors[(int)ImGuiCol.HeaderActive] = _headersColor * 1.5f;
@@ -68,7 +71,8 @@ public class ImGuiTheme
                 col = new(col.X, col.Y, col.Z, .2f);
                 break;
             default:
-                col = new(0.24f, 0.24f, 0.24f, .8f);
+                col = new(0.20f, 0.20f, 0.21f, .8f);
+                //col = new(0.24f, 0.24f, 0.24f, .8f);
                 break;
         }
 
@@ -86,9 +90,9 @@ public class ImGuiTheme
     {
         ImGuiStyle.ChildRounding = _childRounding;
         ImGuiStyle.FrameRounding = _frameRounding;
-        ImGuiStyle.FrameBorderSize = 1;
-        ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new(0.25f, 0.25f, 0.25f, 1);
-        ImGuiStyle.Colors[(int)ImGuiCol.Border] = new(.23f, .23f, .23f, 1);
+        ImGuiStyle.FrameBorderSize = _frameBorder;
+        //ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new(0.18f, 0.18f, 0.19f, 1);
+        ImGuiStyle.Colors[(int)ImGuiCol.Border] = _borderColor;
         ImGuiStyle.Colors[(int)ImGuiCol.Header] = _headersColor;
         ImGuiStyle.Colors[(int)ImGuiCol.HeaderHovered] = _headersColor * 1.2f;
         ImGuiStyle.Colors[(int)ImGuiCol.HeaderActive] = _headersColor * 1.5f;

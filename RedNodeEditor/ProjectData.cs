@@ -89,6 +89,7 @@ public class ProjectData
             VariablesManager.VariablesId = projectData.VariablesId;
             VariablesManager.Variables = projectData.Variables;
             ProjectName = Path.GetFileName(filePath);
+            GraphEditor.EditorScrollPos = Vector2.Zero;
             Logger.Append($"Project loaded from: {filePath}");
         }
         catch (Exception ex)
@@ -106,8 +107,8 @@ public class ProjectData
         VariablesManager.VariablesId.Clear();
         VariablesManager.Variables.Clear();
 
-        GraphEditor.GraphNodes.Add(new OnInitializeMod() { Position = new(20, 100) });
-        GraphEditor.GraphNodes.Add(new OnSdkInitialized() { Position = new(20, 400) });
+        GraphEditor.GraphNodes.Add(new OnSdkInitialized() { Position = new(20, 100) });
+        GraphEditor.GraphNodes.Add(new OnWorldUpdate() { Position = new(20, 400) });
         GraphEditor.GraphNodes.Add(new OnGameStart() { Position = new(20, 700) });
         GraphEditor.EditorScrollPos = Vector2.Zero;
         ProjectName = "unsaved";

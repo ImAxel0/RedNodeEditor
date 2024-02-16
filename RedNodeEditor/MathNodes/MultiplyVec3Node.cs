@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using IconFonts;
+using System.Numerics;
 
 namespace RedNodeEditor.MathNodes;
 
@@ -9,7 +10,7 @@ public class MultiplyVec3Node : SonsNode
 
     public MultiplyVec3Node()
     {
-        Name = "MultiplyVec3 (*) (*) (*)";
+        Name = $"MultiplyVec3 {FontAwesome6.Asterisk} {FontAwesome6.Asterisk} {FontAwesome6.Asterisk}";
         Description = "Multiplies two vector 3 and output the result";
         NodeCategory = NodeCategories.Math;
 

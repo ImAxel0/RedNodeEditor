@@ -9,6 +9,7 @@ public class RaycastHitRigidbodyNode : SonsNode
         Name = "RaycastHit.Rigidbody";
         Description = "Gets the Rigidbody of the collider hit by a Physics.Raycast";
         NodeCategory = NodeCategories.Unity;
+        SizeOverride = new(250, 120);
 
         ArgsIn.Add(new ArgIn { Type = typeof(RaycastHit), ArgName = nameof(RaycastHit) });
         ArgsOut.Add(new ArgOut { Type = typeof(Rigidbody) });

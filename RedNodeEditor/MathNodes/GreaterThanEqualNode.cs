@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class GreaterThanEqualNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class GreaterThanEqualNode : SonsNode
 
     public GreaterThanEqualNode()
     {
-        Name = "GreaterThanEqual (>=)";
+        Name = $"GreaterThanEqual {FontAwesome6.GreaterThanEqual}";
         Description = "Returns true if first is greater or equal to second";
         NodeCategory = NodeCategories.Math;
 

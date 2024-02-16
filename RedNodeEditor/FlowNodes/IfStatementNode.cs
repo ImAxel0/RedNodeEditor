@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using IconFonts;
+using System.Xml.Serialization;
 
 namespace RedNodeEditor.FlowNodes;
 
@@ -18,7 +19,7 @@ public class IfStatementNode : SonsNode
 
     public IfStatementNode()
     {
-        Name = "IfStatement";
+        Name = $"IfStatement {FontAwesome6.CodeBranch}";
         Description = "If condition is true go to 1 (first output), else go to 2 (second output)";
         NodeType = NodeTypes.Flow;
         NodeCategory = NodeCategories.FlowChange;

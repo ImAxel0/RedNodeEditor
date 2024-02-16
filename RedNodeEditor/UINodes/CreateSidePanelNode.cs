@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Xml.Serialization;
 
-namespace RedNodeEditor.UI;
+namespace RedNodeEditor.UINodes;
 
 public class CreateSidePanelNode : SonsNode
 {
@@ -23,14 +23,14 @@ public class CreateSidePanelNode : SonsNode
     [JsonIgnore]
     public List<Enum> SideList { get; set; } = new() { Side.Left, Side.Right };
 
-    public CreateSidePanelNode() 
+    public CreateSidePanelNode()
     {
         Name = "CreateSidePanel";
         Description = "Creates a vertical side panel which can contains ui elements like checkboxes, " +
             "sliders etc and outputs the panel id as a string to chain other ui elements";
 
         NodeCategory = NodeCategories.UI;
-        
+
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(PanelId) });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(Title) });
         ArgsIn.Add(new ArgIn { Type = typeof(bool), ArgName = nameof(CanResize) });

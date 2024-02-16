@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using IconFonts;
 using ImGuiNET;
 using RedNodeEditor.EventNodes;
 using UnityEngine;
@@ -117,12 +118,12 @@ public class GraphEditor
         if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.F1), false) && IsEditorHovered && !DraggingOutput && !DraggingNode)
             QuickNodeSelector.ToggleSelector();
 
-        if (ImGui.IsMouseDown(ImGuiMouseButton.Middle) && IsEditorHovered)
-            PanVisual();
-        
-        if (ImGui.GetIO().KeyCtrl && ImGui.GetIO().MouseWheel != 0 && IsEditorHovered)
-            Zoom = Math.Clamp(Zoom + ImGui.GetIO().MouseWheel * Zoom / 6, 0.5f, 1f);
-        
+        if (ImGui.IsMouseDown(ImGuiMouseButton.Middle))
+            PanVisual();  
+
+        if (ImGui.GetIO().KeyCtrl && ImGui.GetIO().MouseWheel != 0 && IsEditorHovered)         
+            Zoom = Math.Clamp(Zoom + ImGui.GetIO().MouseWheel * Zoom / (10 * Zoom), 0.6f, 1f);
+
         if (ImGui.IsMouseReleased(ImGuiMouseButton.Left) && _commentPreviewStart != null)
         {
             var size = _commentPreviewEnd - _commentPreviewStart;
@@ -141,7 +142,7 @@ public class GraphEditor
     {
         ImGui.BeginMenuBar();
 
-        if (ImGui.BeginMenu("Nodes"))
+        if (ImGui.BeginMenu($"{FontAwesome6.SquareShareNodes} Nodes"))
         {
             if (ImGui.MenuItem("Disconnect all nodes"))
                 DisconnectAllNodes();
@@ -166,7 +167,7 @@ public class GraphEditor
             ImGui.SetMouseCursor(ImGuiMouseCursor.ResizeEW);
 
         ImGui.SetCursorPosX(CurrentEditorWinSize.X / 2 + EditorScrollPos.X - ImGui.CalcTextSize($"Zoom: {Zoom:N2}x").X);
-        ImGui.TextDisabled($"Zoom: {Zoom:N2}x");
+        ImGui.TextDisabled($"{FontAwesome6.Eye} Zoom: {Zoom:N2}x");
 
         ImGui.EndMenuBar();
     }
@@ -323,7 +324,6 @@ public class GraphEditor
         ImGui.Dummy(new(0, 25 * Zoom));
 
         node.ArgsOut.ForEach(arg => {
-
             arg.Render(node);
             if (node.ArgsOut.Count > 1) // && node.ArgsOut.Last() != arg
                 ImGui.Dummy(new(0, 25 * Zoom));
@@ -331,7 +331,7 @@ public class GraphEditor
 
         // End column
         ImGui.Columns(1);
-
+        
         int idx = 0;
         foreach (var prop in nodeProperties)
         {
@@ -651,13 +651,15 @@ public class GraphEditor
         }
         else if (property.PropertyType == typeof(string))
         {
-            ImGuiInputTextFlags flags = (property.CustomAttributes.Any(at => at.AttributeType == typeof(IsEventName)) || node.GetType() == typeof(CustomEventNode)) 
+            ImGuiInputTextFlags flags = (property.CustomAttributes.Any(at => at.AttributeType == typeof(IsEventName)) 
+                || CharsNoBlankTypes.CharsNoBlank.Any(x => x == node.GetType())) 
                 ? ImGuiInputTextFlags.CharsNoBlank : ImGuiInputTextFlags.None;
 
             string value = (string)property.GetValue(node);
             if (string.IsNullOrEmpty(value))
                 value = "";
-            ImGui.InputText(property.Name, ref value, 1000, flags);
+
+            ImGui.InputTextWithHint($"##{property.Name}", property.Name, ref value, 10000, flags);
             property.SetValue(node, value);
         }
         else if (property.PropertyType == typeof(Vector2))

@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class DivideNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class DivideNode : SonsNode
 
     public DivideNode()
     {
-        Name = "Divide (/)";
+        Name = $"Divide {FontAwesome6.Divide}";
         Description = "Divides first by second and output the result";
         NodeCategory = NodeCategories.Math;
 

@@ -31,7 +31,7 @@ public class Drawings
         float distance = (float)Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2));
         float delta = distance * 0.45f;
         if (p2.X<p1.X) delta += 0.2f * (p1.X - p2.X);
-        // float vert = (p2.x < p1.x - 20.f) ? 0.062f * distance * (p2.y - p1.y) * 0.005f : 0.f;
+         //float vert = (p2.X < p1.X - 20) ? 0.062f * distance * (p2.Y - p1.Y) * 0.005f : 0;
         float vert = 0;
         Vector2 p22 = p2 - new Vector2(delta, vert);
         if (p2.X<p1.X - 50f) delta *= -1f;
@@ -78,12 +78,45 @@ public class Drawings
         ImGui.GetWindowDrawList().AddCircleFilled(center, outerRadius * GraphEditor.Zoom, color, segments);
     }
 
+    public static void DrawNodeListArgInCircle(ArgIn argIn)
+    {
+        Vector2 cursorScreenPos = ImGui.GetCursorScreenPos();
+        Vector2 center = new Vector2(cursorScreenPos.X + 5, cursorScreenPos.Y + 5);
+        ImGui.GetWindowDrawList().AddCircle(center, 5, ImGui.GetColorU32(GetTypeColor(argIn.Type)));
+
+        if (Utilities.IsMouseHovering(center, 5))
+            InOutTooltip(true, argIn.Type.Name);
+    }
+
+    public static void DrawNodeListArgOutCircle(ArgOut argOut)
+    {
+        Vector2 cursorScreenPos = ImGui.GetCursorScreenPos();
+        Vector2 center = new Vector2(cursorScreenPos.X + 5, cursorScreenPos.Y + 5);
+        ImGui.GetWindowDrawList().AddCircle(center, 5, ImGui.GetColorU32(GetTypeColor(argOut.Type)));
+
+        if (Utilities.IsMouseHovering(center, 5))
+            InOutTooltip(true, argOut.Type.Name);
+    }
+
     public static void NodeTooltip(string description)
     {
         if (ImGui.IsItemHovered(ImGuiHoveredFlags.None))
         {
             ImGui.BeginTooltip();
             ImGui.PushTextWrapPos(ImGui.GetFontSize() * 35.0f);
+            ImGui.TextUnformatted(description);
+            ImGui.PopTextWrapPos();
+            ImGui.EndTooltip();
+        }
+    }
+
+    public static void NodeListTooltip(string nodeName, string description)
+    {
+        if (ImGui.IsItemHovered(ImGuiHoveredFlags.None))
+        {
+            ImGui.BeginTooltip();
+            ImGui.PushTextWrapPos(ImGui.GetFontSize() * 35.0f);
+            ImGui.TextColored(Colors.Warning, nodeName);
             ImGui.TextUnformatted(description);
             ImGui.PopTextWrapPos();
             ImGui.EndTooltip();
@@ -107,7 +140,7 @@ public class Drawings
         switch (type)
         {
             case Type t when t == typeof(bool):
-                return new Vector4(1, 0.00f, 0.00f, 1);
+                return new Vector4(1, 0, 0, 1);
 
             case Type t when t == typeof(int):
                 return new Vector4(0.11f, 0.90f, 0.69f, 1);
@@ -132,6 +165,7 @@ public class Drawings
 
     public enum CursorType
     {
+        Default,
         InputOutput,
         Argument,
     }
@@ -143,9 +177,18 @@ public class Drawings
 
         switch (curType)
         {
+            case CursorType.Default:
+                var p1 = mousePos;
+                var p2 = mousePos + new Vector2(12, 5) * 1.3f;
+                var p3 = mousePos + new Vector2(5, 12) * 1.3f;
+                ImGui.GetForegroundDrawList().AddTriangle(p1, p2, p3, ImGui.GetColorU32(Colors.SelectedNodeColor));
+                ImGui.GetForegroundDrawList().AddTriangleFilled(p1 + new Vector2(2, 2), p2 - new Vector2(3, 0), p3 - new Vector2(0, 3), ImGui.GetColorU32(Colors.White));
+                break;
+
             case CursorType.InputOutput:
                 ImGui.GetForegroundDrawList().AddCircleFilled(mousePos, 7, ImGui.GetColorU32(new Vector4(1, 1, 1, .8f)), 1);
                 break;
+
             case CursorType.Argument:              
                 ImGui.GetForegroundDrawList().AddCircleFilled(mousePos, 7, ImGui.GetColorU32(GetTypeColor(type)));
                 break;

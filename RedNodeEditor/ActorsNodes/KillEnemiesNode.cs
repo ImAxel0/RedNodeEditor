@@ -1,4 +1,4 @@
-﻿namespace RedNodeEditor.ActorsNodes;
+﻿namespace RedNodeEditor.Nodes.ActorsNodes;
 
 public class KillEnemiesNode : SonsNode
 {

@@ -11,6 +11,7 @@ public class ShortcutHelp
         "CTRL+A = SAVE PROJECT AT\n" +
         "CTRL+B = BUILD MOD\n" +
         "------------------------------------------------\n" +
+        "F11 = FULLSCREEN/WINDOWED\n" +
         "SHIFT+1 = VARIABLES TAB\n" +
         "SHIFT+2 = ERRORLIST TAB\n" +
         "SHIFT+3 = LOG TAB\n" +
@@ -72,5 +73,11 @@ public class ShortcutHelp
 
         if (ImGui.GetIO().KeyShift && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey._3)))
             NodeList.SelectedOption = NodeList.Options.Log;
+
+        if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.F11), false))
+        {
+            var windowsState = Program._window.WindowState == Veldrid.WindowState.BorderlessFullScreen ? Veldrid.WindowState.Normal : Veldrid.WindowState.BorderlessFullScreen;
+            Program._window.WindowState = windowsState;              
+        }
     }
 }

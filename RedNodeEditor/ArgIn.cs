@@ -52,6 +52,7 @@ public class ArgIn
     /// </summary>
     public int ReceiveFromIndex { get; set; }
 
+    [XmlIgnore]
     public bool Hide { get; set; }
 
     public void Render(SonsNode node)

@@ -1,4 +1,5 @@
 ﻿using CSharpVitamins;
+using IconFonts;
 using System.Xml.Serialization;
 
 namespace RedNodeEditor.EventNodes;
@@ -16,7 +17,7 @@ public class CustomEventNode : SonsNode
 
     public CustomEventNode() 
     {
-        Name = "CustomEvent";
+        Name = $"CustomEvent {FontAwesome6.SquareCaretRight}";
         Description = "A custom event with optional boolean and float outputs";
         NodeType = NodeTypes.Starter;
         NodeCategory = NodeCategories.FlowChange;

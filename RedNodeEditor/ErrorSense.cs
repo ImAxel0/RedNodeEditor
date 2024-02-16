@@ -1,7 +1,7 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
 using RedNodeEditor.EventNodes;
-using System.Runtime.ConstrainedExecution;
-using static Sons.Ai.Vail.VailStateMachineEvents;
+using System.Numerics;
 
 namespace RedNodeEditor;
 
@@ -47,7 +47,7 @@ public class ErrorSense
 
     public static void CheckArguments()
     {
-        foreach (var node in GraphEditor.GraphNodes)
+        foreach (var node in GraphEditor.GraphNodes.ToList())
         {
             node.ArgsOut.ForEach(arg =>
             {
@@ -88,7 +88,7 @@ public class ErrorSense
                 TypeMsg.Add(new(Type.Error, $"A {cEvent.Name} node doesn't have an EventName"));
         }       
 
-        foreach (var node in GraphEditor.GraphNodes)
+        foreach (var node in GraphEditor.GraphNodes.ToList())
         {
             var property = node.GetType().GetProperties().FirstOrDefault(p => p.CustomAttributes.Any(at => at.AttributeType == typeof(IsEventName)));
 
@@ -105,9 +105,10 @@ public class ErrorSense
         ImGuiTheme.LoggerTheme();
 
         ImGui.PushFont(Drawings.Font20);
-        ImGui.SeparatorText("ErrorList");
+        ImGui.SeparatorText($"ErrorList {FontAwesome6.ListCheck}");
         ImGui.PopFont();
 
+        ImGuiTheme.ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new Vector4(0.2f, 0.22f, 0.23f, 1);
         ImGui.BeginChild("ErrorListWindow", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border, ImGuiWindowFlags.MenuBar);
 
         ImGui.BeginMenuBar();
@@ -115,9 +116,11 @@ public class ErrorSense
         ImGui.TextColored(Drawings.Colors.Error, $"Errors [{Errors}]" );
         ImGui.TextColored(Drawings.Colors.Warning, $"Warnings [{Warnings}]");
 
+        string errorIcon = ShowErrors ? FontAwesome6.Eye : FontAwesome6.EyeSlash;
+        string warningIcon = ShowWarnings ? FontAwesome6.Eye : FontAwesome6.EyeSlash;
 
-        ImGui.Checkbox("Errors", ref ShowErrors);
-        ImGui.Checkbox("Warnings", ref ShowWarnings);
+        ImGui.Checkbox($"{errorIcon} Errors", ref ShowErrors);
+        ImGui.Checkbox($"{warningIcon} Warnings", ref ShowWarnings);
 
         ImGui.EndMenuBar();
 

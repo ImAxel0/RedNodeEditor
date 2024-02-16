@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using IconFonts;
+using System.Numerics;
 
 namespace RedNodeEditor.MathNodes;
 
@@ -9,7 +10,7 @@ public class DivideVec3Node : SonsNode
 
     public DivideVec3Node()
     {
-        Name = "DivideVec3 (/) (/) (/)";
+        Name = $"DivideVec3 {FontAwesome6.Divide} {FontAwesome6.Divide} {FontAwesome6.Divide}";
         Description = "Divides first vector 3 by secoond and output the result";
         NodeCategory = NodeCategories.Math;
 

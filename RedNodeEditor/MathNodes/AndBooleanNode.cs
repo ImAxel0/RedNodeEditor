@@ -1,10 +1,12 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class AndBooleanNode : SonsNode
 {
     public AndBooleanNode()
     {
-        Name = "AND Boolean (&&)";
+        Name = $"AND Boolean {FontAwesome6.CheckDouble}";
         Description = "Returns true if both of the inputs are true";
         NodeCategory = NodeCategories.Math;
         SizeOverride = new(250, 140);

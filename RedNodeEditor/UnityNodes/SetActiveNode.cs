@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Xml.Serialization;
+using UnityEngine;
 
 namespace RedNodeEditor.UnityNodes;
 
 public class SetActiveNode : SonsNode
 {
+    [XmlIgnore]
+    public GameObject GameObject { get; set; }
     public bool Value { get; set; }
 
     public SetActiveNode()

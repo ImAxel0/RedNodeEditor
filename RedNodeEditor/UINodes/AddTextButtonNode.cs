@@ -1,4 +1,4 @@
-﻿namespace RedNodeEditor.UI;
+﻿namespace RedNodeEditor.UINodes;
 
 public class AddTextButtonNode : SonsNode
 {

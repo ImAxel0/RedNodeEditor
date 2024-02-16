@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class AddNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class AddNode : SonsNode
 
     public AddNode() 
     {
-        Name = "Add (+)";
+        Name = $"Add {FontAwesome6.SquarePlus}";
         Description = "Sum two numeric values and output the result";
         NodeCategory = NodeCategories.Math;
 

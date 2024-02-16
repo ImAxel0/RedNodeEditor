@@ -5,6 +5,7 @@ namespace RedNodeEditor;
 
 public class ProgramData
 {
+    public static readonly string AppVersion = "0.1.0";
     public static readonly string ProjectExtension = ".rproj";
     public static readonly string ModExtension = ".rmod";
     public static string ExeFolder = "";

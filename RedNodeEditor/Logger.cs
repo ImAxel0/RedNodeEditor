@@ -1,4 +1,6 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
+using System.Numerics;
 
 namespace RedNodeEditor;
 
@@ -22,9 +24,10 @@ public class Logger
         ImGuiTheme.LoggerTheme();
 
         ImGui.PushFont(Drawings.Font20);
-        ImGui.SeparatorText("Log");
+        ImGui.SeparatorText($"Log {FontAwesome6.EnvelopeOpenText}");
         ImGui.PopFont();
 
+        ImGuiTheme.ImGuiStyle.Colors[(int)ImGuiCol.ChildBg] = new Vector4(0.2f, 0.22f, 0.23f, 1);
         ImGui.BeginChild("LoggerWindow", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border);
         ImGui.BeginDisabled(true);
         ImGui.TextUnformatted(Content);

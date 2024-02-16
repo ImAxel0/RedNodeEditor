@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using IconFonts;
+using ImGuiNET;
 using Vanara.PInvoke;
 
 namespace RedNodeEditor;
@@ -18,10 +19,10 @@ public class ProjectDialogSave
             return;
         }
 
-        ImGui.OpenPopup("Give a name to the mod project");
+        ImGui.OpenPopup($"Give a name to the mod project {FontAwesome6.SdCard}");
         ImGui.SetNextWindowSize(new(600, 400));
         ImGui.PushFont(Drawings.Font20);
-        ImGui.BeginPopupModal("Give a name to the mod project", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
+        ImGui.BeginPopupModal($"Give a name to the mod project {FontAwesome6.SdCard}", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
         ImGui.PopFont();
 
         ImGui.InputText("Project name", ref _projectNameBuffer, 1000);
@@ -31,7 +32,7 @@ public class ProjectDialogSave
             _kbFocus = false;
         }
         //ImGui.SameLine();
-        if (ImGui.Button("Save", new(ImGui.GetContentRegionAvail().X, 50)))
+        if (ImGui.Button($"Save {FontAwesome6.SdCard}", new(ImGui.GetContentRegionAvail().X, 50)))
         {
             if (string.IsNullOrEmpty(_projectNameBuffer))
             {

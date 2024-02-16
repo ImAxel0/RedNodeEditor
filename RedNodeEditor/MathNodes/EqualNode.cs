@@ -1,4 +1,6 @@
-﻿namespace RedNodeEditor.MathNodes;
+﻿using IconFonts;
+
+namespace RedNodeEditor.MathNodes;
 
 public class EqualNode : SonsNode
 {
@@ -7,7 +9,7 @@ public class EqualNode : SonsNode
 
     public EqualNode()
     {
-        Name = "Equal (==)";
+        Name = $"Equal {FontAwesome6.Equals}";
         Description = "Returns true if the two numeric values are the same";
         NodeCategory = NodeCategories.Math;
 

@@ -16,6 +16,7 @@ public class SonsNode
     public Vector2 Position { get; set; }
 
     [XmlIgnore]
+    [JsonIgnore]
     public Vector2 SizeOverride { get; set; } = Vector2.Zero;
 
     [XmlIgnore]
@@ -60,6 +61,7 @@ public class SonsNode
     {
         Others,
         Actors,
+        Audio,
         Environment,
         Player,
         Inventory,
@@ -68,6 +70,7 @@ public class SonsNode
         Math,
         FlowChange,
         Input,
+        Generics,
         UI,
         Unity,
         Utilities,
