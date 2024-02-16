@@ -57,9 +57,86 @@ The application was built with a focus on RedLoader by using it's functionalitie
 Depending if the mod used some nodes which where greatly changed in functionalities the mod may break or not. (Reverting to an older version of the loader is always possible to keep using it).
 
 ---
+## Pics :camera:
 ![RedNodeEditor](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/1ae6cbf8-b80c-407c-914c-de3c39e2b87d)
 
 ### Plane mod example
 ![PlaneMod](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/32bbeb7d-b899-4f5e-b43c-08c7babbc741)
 
+---
+## Contributing to the project :video_game:
+To create a new node we need to make a new class which derives from the **SonsNode** class and populate it's informations like shown below.
 
+### Nodes having inputs only:
+```cs
+public class SetWalkSpeedNode : SonsNode
+{
+    public float Speed { get; set; } // the argument input displayed as an input field
+
+    public SetWalkSpeedNode()
+    {
+        Name = "SetWalkSpeed"; // the name of the node which will be displayed in the editor
+        Description = "Sets player walk speed"; // description about what the node does or how should be used
+        NodeCategory = NodeCategories.Player; // the node category in which to put the node
+
+        // the input argument displayed as a circle (ArgName is optional but preferred; nameof should always be used to maintain the right references)
+        ArgsIn.Add(new ArgIn { Type = typeof(float), ArgName = nameof(Speed) });
+    }
+}
+```
+
+### Nodes having an output only:
+```cs
+public class GetRunSpeedNode : SonsNode
+{
+    public GetRunSpeedNode()
+    {
+        Name = "GetRunSpeed"; // the name of the node which will be displayed in the editor
+        Description = "Returns player run speed"; // description about what the node does or how should be used
+        NodeCategory = NodeCategories.Player; // the node category in which to put the node
+
+        // the output argument displayed as a circle
+        ArgsOut.Add(new ArgOut { Type = typeof(float) });
+    }
+}
+```
+
+### Nodes having both inputs and an output:
+```cs
+public class AmountOfNode : SonsNode
+{
+    public int ItemId { get; set; } // the argument input displayed as an input field
+
+    public AmountOfNode()
+    {
+        Name = "AmountOf"; // the name of the node which will be displayed in the editor
+        Description = "Gets the owned amount of the passed item id"; // description about what the node does or how should be used
+        NodeCategory = NodeCategories.Inventory; // the node category in which to put the node
+
+        ArgsIn.Add(new ArgIn { Type = typeof(int), ArgName = nameof(ItemId) }); // input argument displayed as a circle
+        ArgsOut.Add(new ArgOut { Type = typeof(int) }); // output argument displayed as a circle
+    }
+}
+```
+
+### Nodes using external types:
+If the input argument isn't of the common types (int, float, bool, string, Vector3, Vector2) the property must still be written and marked with the [XmlIgnore] attribute like shown in the example below.
+
+```cs
+public class SetActiveNode : SonsNode
+{
+    [XmlIgnore] // use this attribute when the property type it's not (int, float, bool, string, Vector3, Vector2)
+    public GameObject GameObject { get; set; } // GameObject type isn't a common type so no input field will be displayed
+    public bool Value { get; set; } // Boolean type is a common type so a checkbox will be displayed
+
+    public SetActiveNode()
+    {
+        Name = "SetActive"; // the name of the node which will be displayed in the editor
+        Description = "Turns the passed GameObject on or off"; // description about what the node does or how should be used
+        NodeCategory = NodeCategories.Unity; // the node category in which to put the node
+
+        ArgsIn.Add(new ArgIn { Type = typeof(GameObject), ArgName = nameof(GameObject) }); // 1° input argument displayed as a circle
+        ArgsIn.Add(new ArgIn { Type = typeof(bool), ArgName = nameof(Value) }); // 2° input argument displayed as a circle
+    }
+}
+```
