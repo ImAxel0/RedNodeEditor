@@ -11,13 +11,13 @@
  ## FEATURES :star:
  - Made specifically for [**RedLoader**](https://github.com/ToniMacaroni/RedLoader/tree/main)
  - **Shareable projects**: share you mod projects with others
- - **Error detection**: detects common errors during the mod making process
+ - **Error detection**: detects common errors when building the mod
  - **Colored graph comments**: comment your node sections with what they do
  - **Node descriptions**: each node when hovered shows a description about what it does or how should be used
  - **Zoom**: zoomable graph editor
  - **Variables**: store values in containers to later use them
  - **Custom events**: alter the node flow and keeps a tidy editor visual
- - **Generic nodes**: expand the modding capabilities beyond the provided nodes
+ - **Generic and Unity nodes**: expand the modding capabilities beyond the provided nodes
  - **200+** available nodes to use
 
 ---
@@ -58,10 +58,10 @@ Depending if the mod used some nodes which where greatly changed in functionalit
 
 ---
 ## Pics :camera:
-![RedNodeEditor](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/1ae6cbf8-b80c-407c-914c-de3c39e2b87d)
+https://github.com/ImAxel0/RedNodeEditor/assets/124681710/25c4f2b4-2096-475d-8575-71d80d7ba5c1
 
-### Plane mod example
-![PlaneMod](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/32bbeb7d-b899-4f5e-b43c-08c7babbc741)
+### Mod menu mod example
+![ModMenuScreen](https://github.com/ImAxel0/RedNodeEditor/assets/124681710/cdec7ca5-fe9c-4b5c-974b-0841279e1864)
 
 ---
 ## Contributing to the project :video_game:
@@ -120,7 +120,7 @@ public class AmountOfNode : SonsNode
 ```
 
 ### Nodes using external types:
-If the input argument isn't of the common types (int, float, bool, string, Vector3, Vector2) the property must still be written and marked with the [XmlIgnore] attribute like shown in the example below.
+If the input argument isn't of the common types (int, float, bool, string, Vector3, Vector2) the property must still be written and marked with the `[XmlIgnore]` attribute like shown in the example below.
 
 ```cs
 public class SetActiveNode : SonsNode
@@ -140,3 +140,78 @@ public class SetActiveNode : SonsNode
     }
 }
 ```
+
+## Implementing the new node
+To make the node functional we need to implement it's behaviour in RedNodeLoader. To do so we need to create a new class which must have the same exact name, namespace and properties names as the one defined in the editor before.
+We then need to override the **Execute** method, which is where the node behaviour will happen, and add inputs and outputs of the node as properties if any. 
+
+The `RedNodeLoader.GetArgumentsOf(this)` method is used to retrieve both static inputs and passed arguments of a node.
+
+Here is an example implementation for the **SetWalkSpeed** node we showed before.
+
+```cs
+public class SetWalkSpeedNode : SonsNode
+{
+    public float Speed { get; set; } // input arguments must be defined as public properties using the same name as chosed in the editor class
+
+    public override void Execute()
+    {
+        List<object> args = RedNodeLoader.GetArgumentsOf(this); // retrieves the arguments of SetWalkSpeed (only Speed value in this case) and stores them as generic objects in a list in the same order as defined in the editor class 
+        LocalPlayer.FpCharacter.SetWalkSpeed((float)args[0]); // each argument must be explicitly casted to it's proper type and index. Never use the property directly like "Speed" as it won't work if the value is passed
+    }
+}
+```
+
+### Nodes having an output:
+Nodes having an output argument must have a public property of whatever name we chose and as the same type defined in the editor class. The output property must have the `[IsArgOut]` attribute to define it's an output argument.
+
+Here is an example implementation for the **GetRunSpeed** node we showed before.
+```cs
+public class GetRunSpeedNode : SonsNode
+{
+    [IsArgOut] // output argument must have this attribute
+    public float Speed { get; set; } // output argument must be defined as a public property. The name can be whatever you want
+
+    public override void Execute()
+    {
+        Speed = LocalPlayer.FpCharacter.RunSpeed; // getting the desidered value and storing it into the node output argument
+    }
+}
+```
+
+### Nodes having both inputs and an output:
+```cs
+public class AmountOfNode : SonsNode
+{
+    public int ItemId { get; set; } // input argument property
+
+    [IsArgOut]
+    public int OwnedAmount { get; set; } // output argument property
+
+    public override void Execute()
+    {
+        List<object> args = RedNodeLoader.GetArgumentsOf(this); // getting the value of "ItemId" input argument
+        OwnedAmount = LocalPlayer.Inventory.AmountOf((int)args[0]); // getting and storing the output argument in the "OwnedAmount" property
+    }
+}
+```
+
+### Nodes using external types:
+```cs
+public class SetActiveNode : SonsNode
+{
+    [XmlIgnore] // use this attribute when the property type it's not (int, float, bool, string, Vector3, Vector2)
+    public GameObject GameObject { get; set; } // 1° input argument property
+    public bool Value { get; set; } // 2° input argument property
+
+    public override void Execute()
+    {
+        List<object> args = RedNodeLoader.GetArgumentsOf(this); // getting value of "GameObject" and "Value"
+        var go = (GameObject)args[0]; // casting and storing the GameObject
+        go.SetActive((bool)args[1]); // using the casted GameObject and the boolean property
+    }
+}
+```
+
+> **VECTORS**: when working with vectors always use `System.Numerics.Vector` as the property type and not the `UnityEngine` one, both in the editor and RedNodeLoader class.
+In the implementation of the node you will then need to create a `UnityEngine.Vector` using the (X,Y,Z) values accordingly.
