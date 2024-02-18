@@ -25,6 +25,8 @@ public class ProjectDialogSave
         ImGui.BeginPopupModal($"Give a name to the mod project {FontAwesome6.SdCard}", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
         ImGui.PopFont();
 
+        ImGui.BeginChild("SavingDialogTopBar", new System.Numerics.Vector2(ImGui.GetContentRegionAvail().X, 70), ImGuiChildFlags.Border);
+
         ImGui.InputText("Project name", ref _projectNameBuffer, 1000);
         if (_kbFocus)
         {
@@ -32,7 +34,7 @@ public class ProjectDialogSave
             _kbFocus = false;
         }
         //ImGui.SameLine();
-        if (ImGui.Button($"Save {FontAwesome6.SdCard}", new(ImGui.GetContentRegionAvail().X, 50)))
+        if (ImGui.Button($"Save {FontAwesome6.SdCard}", new(ImGui.GetContentRegionAvail().X, 25)))
         {
             if (string.IsNullOrEmpty(_projectNameBuffer))
             {
@@ -59,23 +61,36 @@ public class ProjectDialogSave
                 _projectNameBuffer = string.Empty;
             }
         }
+        ImGui.EndChild();
 
-        ImGui.Separator();
+        ImGui.BeginChild("SavingDialogTable", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border);
 
-        ImGui.PushFont(Drawings.Font18);
-        ImGui.Text("Saved Projects:");
-        ImGui.PopFont();
+        if (!ShowDialog) // prevents crash
+            return;
+
+        ImGui.BeginTable("SavedProjectsTable", 3, ImGuiTableFlags.Borders);
+        ImGui.TableSetupColumn("Name");
+        ImGui.TableSetupColumn("Creation");
+        ImGui.TableSetupColumn("Last modified");
+        ImGui.TableHeadersRow();
 
         foreach (var file in Directory.GetFiles(ProgramData.ProjectsFolder))
         {
             if (Path.GetExtension(file) != ProgramData.ProjectExtension)
                 continue;
 
-            var label = $"{Path.GetFileName(file)}\nCreated: {File.GetCreationTime(file)} || Last modified: {File.GetLastWriteTime(file)}";
+            ImGui.TableNextRow();
+            ImGui.TableSetColumnIndex(0);
+            ImGui.TextDisabled(Path.GetFileName(file));
 
-            ImGui.TextDisabled(label);
-            ImGui.Dummy(new(0, 5));
+            ImGui.TableSetColumnIndex(1);
+            ImGui.TextDisabled(File.GetCreationTime(file).ToString());
+
+            ImGui.TableSetColumnIndex(2);
+            ImGui.TextDisabled(File.GetLastWriteTime(file).ToString());
         }
+        ImGui.EndTable();
+        ImGui.EndChild();
 
         ImGui.EndPopup();
     }

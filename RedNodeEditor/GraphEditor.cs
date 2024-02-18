@@ -30,6 +30,8 @@ public class GraphEditor
 
     public static bool DraggingOutput;
 
+    public static bool IsPanning;
+
     public static float Zoom = 1f;
 
     static float _panSpeed = 10f;
@@ -120,9 +122,10 @@ public class GraphEditor
 
         if (ImGui.IsMouseDown(ImGuiMouseButton.Middle))
             PanVisual();  
+        else IsPanning = false;
 
-        if (ImGui.GetIO().KeyCtrl && ImGui.GetIO().MouseWheel != 0 && IsEditorHovered)         
-            Zoom = Math.Clamp(Zoom + ImGui.GetIO().MouseWheel * Zoom / (10 * Zoom), 0.6f, 1f);
+        if (ImGui.GetIO().KeyCtrl && ImGui.GetIO().MouseWheel != 0 && IsEditorHovered)
+            Zoom = Math.Clamp(Zoom + ImGui.GetIO().MouseWheel * Zoom / (10 * Zoom), 0.6f, 1f);  
 
         if (ImGui.IsMouseReleased(ImGuiMouseButton.Left) && _commentPreviewStart != null)
         {
@@ -263,7 +266,7 @@ public class GraphEditor
         node.IsDragging = ImGui.IsWindowHovered() && ImGui.IsMouseDown(ImGuiMouseButton.Left);
         if (node.IsDragging || node == _selectedNode && ImGui.IsMouseDown(ImGuiMouseButton.Left) && IsEditorHovered)
         {
-            if (!DraggingOutput)
+            if (!DraggingOutput && !IsPanning)
             {
                 node.Position += ImGui.GetIO().MouseDelta / Zoom;
                 _selectedNode = node;
@@ -631,6 +634,8 @@ public class GraphEditor
         ImGui.BeginChild($"Inputs_{node.Name}", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border, ImGuiWindowFlags.NoScrollbar 
             | ImGuiWindowFlags.NoScrollWithMouse);
 
+        ImGui.SetWindowFontScale(Zoom);
+
         if (property.PropertyType == typeof(int))
         {
             int value = (int)property.GetValue(node);
@@ -694,6 +699,7 @@ public class GraphEditor
 
     static void PanVisual()
     {
+        IsPanning = true;
         ImGui.SetMouseCursor(ImGuiMouseCursor.ResizeAll);
         EditorScrollPos -= ImGui.GetIO().MouseDelta / 10 * _panSpeed;
     }

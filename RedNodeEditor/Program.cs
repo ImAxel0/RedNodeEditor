@@ -39,7 +39,6 @@ class Program
 
         ImGuiTheme.ImGuiStyle = ImGui.GetStyle();
         ImGuiTheme.ApplyTheme();
-        ErrorSense.Start();
 
         while (_window.Exists)
         {
@@ -76,7 +75,7 @@ class Program
 
     static void RenderUI()
     {
-        ImGui.SetNextWindowPos(new(0, 0));
+        ImGui.SetNextWindowPos(Vector2.Zero);
         ImGui.SetNextWindowSize(ImGui.GetIO().DisplaySize);
 
         ImGui.Begin("MainWindow", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse
@@ -90,15 +89,10 @@ class Program
 
         GraphEditor.Render();
 
-        if (ImGuiNative.igGetMouseCursor() == ImGuiMouseCursor.Arrow && ImGui.IsMouseHoveringRect(Vector2.Zero, ImGui.GetIO().DisplaySize))
-            //Drawings.DrawCursor(Drawings.CursorType.Default);
-
         ProjectDialogLoad.Render();
         ProjectDialogSave.Render();
 
         ImGui.End();
-
-        var s = ImGui.GetIO().DisplaySize;
 
         ShortcutHelp.ShortcutLisener();
     }
@@ -207,6 +201,9 @@ class Program
             ImGui.Text("Shortcuts");
             Drawings.NodeTooltip(ShortcutHelp.ShortcutInfo);
 
+            if (ImGui.MenuItem("Documentation"))
+                Process.Start(new ProcessStartInfo("https://app.gitbook.com/o/NHbK8lCm0flXIHLC9Bun/s/16eHiWrLvkdzPgx4n88e/") { UseShellExecute = true });
+
             if (ImGui.MenuItem("SOTF Discord"))
                 Process.Start(new ProcessStartInfo("https://discord.gg/sotf") { UseShellExecute = true });
 
@@ -218,7 +215,7 @@ class Program
             Drawings.NodeTooltip($"RedNodeEditor v{ProgramData.AppVersion} (Beta)\nDeveloped by Im-_-Axel");
 
             if (ImGui.MenuItem("Source code"))
-                Process.Start(new ProcessStartInfo("https://github.com/") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo("https://github.com/ImAxel0/RedNodeEditor") { UseShellExecute = true });
 
             ImGui.EndMenu();
         }

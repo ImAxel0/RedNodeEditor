@@ -35,6 +35,8 @@ public class VariablesManager
 
     static void RenderTopInputs()
     {
+        ImGui.BeginChild("VariablesTopBar", new System.Numerics.Vector2(ImGui.GetContentRegionAvail().X, 40));
+
         ImGui.Columns(3, "", false);
 
         ImGui.InputTextWithHint("Name", "...", ref NameBuffer, 1000, ImGuiInputTextFlags.CharsNoBlank);
@@ -68,10 +70,14 @@ public class VariablesManager
                     User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
         }
         ImGui.Columns(1);
+
+        ImGui.EndChild();
     }
 
     static void RenderVariables()
     {
+        ImGui.BeginChild("VariablesList", ImGui.GetContentRegionAvail());
+
         int idx = 0;
         foreach (var variable in Variables.ToList())
         {
@@ -86,7 +92,7 @@ public class VariablesManager
 
             if (ImGui.Selectable("Get"))
             {
-                var newPos = new Vector2(50 + GraphEditor.EditorScrollPos.X, 50 + GraphEditor.EditorScrollPos.Y);
+                var newPos = new Vector2(50 + GraphEditor.EditorScrollPos.X, 50 + GraphEditor.EditorScrollPos.Y) / GraphEditor.Zoom;
                 SonsNode varNode = new();
                 switch (variable.Value)
                 {
@@ -151,7 +157,7 @@ public class VariablesManager
 
             if (ImGui.Selectable("Set"))
             {
-                var newPos = new Vector2(50 + GraphEditor.EditorScrollPos.X, 50 + GraphEditor.EditorScrollPos.Y);
+                var newPos = new Vector2(50 + GraphEditor.EditorScrollPos.X, 50 + GraphEditor.EditorScrollPos.Y) / GraphEditor.Zoom;
                 SonsNode varNode = new();
                 switch (variable.Value)
                 {
@@ -226,6 +232,7 @@ public class VariablesManager
             ImGui.EndChild();
             idx++;
         }
+        ImGui.EndChild();
     }
 
     public static void Render()

@@ -50,7 +50,7 @@ public class OutputNode
         }
         else Drawings.DrawEmptyCircle(_radius, ImGui.GetColorU32(Drawings.Colors.White), 1);
 
-        if (ImGui.IsMouseDown(ImGuiMouseButton.Right) && !IsDragging && !GraphEditor.DraggingOutput)
+        if (ImGui.IsMouseDown(ImGuiMouseButton.Right) && !IsDragging && !GraphEditor.DraggingOutput && !GraphEditor.IsPanning)
             GraphEditor.DraggingOutput = IsDragging = ImGui.IsMouseDown(ImGuiMouseButton.Right) && Utilities.IsMouseHovering(Position, _radius);
 
         else if (!ImGui.IsMouseDown(ImGuiMouseButton.Right) && IsDragging)

@@ -13,8 +13,7 @@ public class ShortcutHelp
         "------------------------------------------------\n" +
         "F11 = FULLSCREEN/WINDOWED\n" +
         "SHIFT+1 = VARIABLES TAB\n" +
-        "SHIFT+2 = ERRORLIST TAB\n" +
-        "SHIFT+3 = LOG TAB\n" +
+        "SHIFT+2 = LOG TAB\n" +
         "------------------------------------------------\n" +
         "DELETE = DELETE NODE\n" +
         "CTRL+D = DUPLICATE NODE\n" +
@@ -54,7 +53,7 @@ public class ShortcutHelp
             ProjectData.CreateNewProject();
             return;
         }
-
+        
         if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.B)))
         {
             ModData modData = ModBuilder.MakeModData();
@@ -64,14 +63,11 @@ public class ShortcutHelp
             }
             return;
         }
-
+        
         if (ImGui.GetIO().KeyShift && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey._1)))
             NodeList.SelectedOption = NodeList.Options.Variables;
 
         if (ImGui.GetIO().KeyShift && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey._2)))
-            NodeList.SelectedOption = NodeList.Options.ErrorList;
-
-        if (ImGui.GetIO().KeyShift && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey._3)))
             NodeList.SelectedOption = NodeList.Options.Log;
 
         if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.F11), false))

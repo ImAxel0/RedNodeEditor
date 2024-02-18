@@ -70,7 +70,7 @@ public class ArgOut
         else
             Drawings.DrawEmptyCircle(Radius, ImGui.GetColorU32(typeColor));
           
-        if (ImGui.IsMouseDown(ImGuiMouseButton.Right) && !IsDragging && !GraphEditor.DraggingOutput)
+        if (ImGui.IsMouseDown(ImGuiMouseButton.Right) && !IsDragging && !GraphEditor.DraggingOutput && !GraphEditor.IsPanning)
             GraphEditor.DraggingOutput = IsDragging = ImGui.IsMouseDown(ImGuiMouseButton.Right) && Utilities.IsMouseHovering(Position, Radius);
 
         else if (!ImGui.IsMouseDown(ImGuiMouseButton.Right) && IsDragging)

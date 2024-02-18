@@ -16,6 +16,7 @@ public class ModBuilder
         { typeof(OnGameStart), new List<NodeConnection>() },
         { typeof(OnWorldUpdate), new List<NodeConnection>() },
         { typeof(OnUpdate), new List<NodeConnection> () },
+        { typeof(OnFixedUpdate), new List<NodeConnection> () },
         { typeof(CustomEventNode), new List<NodeConnection> () },
     };
 
@@ -25,13 +26,6 @@ public class ModBuilder
         {
             Logger.Append("Error building the mod: project must be saved before building");
             User32.MessageBox(IntPtr.Zero, "Project must be saved before building", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
-            return null;
-        }
-
-        if (ErrorSense.Errors > 0)
-        {
-            Logger.Append("Error building the mod: fix the errors in the ErrorList console before building");
-            User32.MessageBox(IntPtr.Zero, "Fix the errors in the ErrorList console before building", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
             return null;
         }
 
@@ -61,6 +55,7 @@ public class ModBuilder
             OnGameStart = BasePair[typeof(OnGameStart)],
             OnWorldUpdate = BasePair[typeof(OnWorldUpdate)],
             OnUpdate = BasePair[typeof(OnUpdate)],
+            OnFixedUpdate = BasePair[typeof(OnFixedUpdate)],
             CustomEvents = BasePair[typeof(CustomEventNode)]
         };
         return modData;
@@ -70,6 +65,14 @@ public class ModBuilder
     {
         var customEventNodes = GraphEditor.GraphNodes.Where(node => node.GetType() == typeof(CustomEventNode));
         var callCustomEventNodes = GraphEditor.GraphNodes.Where(node => node.GetType() == typeof(CallCustomEventNode));
+
+        var result = ErrorSense.CheckCustomEvents(customEventNodes, callCustomEventNodes);
+
+        if (result.Item1 == false)
+        {
+            User32.MessageBox(IntPtr.Zero, result.Item2, "Error building the mod", User32.MB_FLAGS.MB_TOPMOST | User32.MB_FLAGS.MB_ICONERROR);
+            return false;
+        }
 
         foreach (var customEvent in customEventNodes)
         {

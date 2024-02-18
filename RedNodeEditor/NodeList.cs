@@ -57,7 +57,7 @@ public class NodeList
 
     public static void Render()
     {
-        ImGui.BeginChild("NodeListWindow", new(450, ImGui.GetContentRegionAvail().Y), ImGuiChildFlags.Border | ImGuiChildFlags.ResizeX);
+        ImGui.BeginChild("NodeListWindow", new(470, ImGui.GetContentRegionAvail().Y), ImGuiChildFlags.Border | ImGuiChildFlags.ResizeX);
 
         ImGui.BeginChild("MainNodeListTopBar", new(ImGui.GetContentRegionAvail().X, 115));
         ImGui.PushFont(Drawings.Font20);
@@ -171,9 +171,6 @@ public class NodeList
         
         switch (SelectedOption)
         {
-            case Options.ErrorList:
-                ErrorSense.Render();
-                break;
             case Options.Log:
                 Logger.Render();
                 break;
@@ -191,7 +188,6 @@ public class NodeList
     public enum Options
     {
         Variables,
-        ErrorList,
         Log
     }
 }

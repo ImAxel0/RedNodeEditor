@@ -11,5 +11,6 @@ public class ModData
     public List<NodeConnection> OnGameStart { get; set; }
     public List<NodeConnection> OnWorldUpdate { get; set; }
     public List<NodeConnection> OnUpdate { get; set; }
+    public List<NodeConnection> OnFixedUpdate { get; set; }
     public List<NodeConnection> CustomEvents { get; set; }
 }

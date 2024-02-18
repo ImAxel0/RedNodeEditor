@@ -4,6 +4,7 @@ public class AddTextButtonNode : SonsNode
 {
     public string PanelId { get; set; }
     public string Label { get; set; }
+    public int FontSize { get; set; } = 18;
 
     [IgnoreProperty]
     public string EventId { get; set; }
