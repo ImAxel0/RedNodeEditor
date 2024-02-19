@@ -2,6 +2,8 @@
  <img src="https://i.imgur.com/EeBBqDU.png" width="300" height="300" />
 </p>
 
+<h1 align="center"><ins>UNRELEASED</ins></h1>
+
 # RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
   **A custom node editor to make mods for Sons of the Forest without programming knowledge** 
   
@@ -28,6 +30,13 @@
 
 ---
 ## General infos
+Two project examples are provided with installation:
+
+| Project name | Description | Real mod link | Difficulty |
+|:----------:|:---------:|:---------:|:-------------:|
+| ModMenuExample.rproj | Simplified version of my mod menu | [link](https://sotf-mods.com/mods/imaxel/axel's-mod-menu) | easy-intermediate |
+| PlaneModExample.rproj | Mod where you can pilot a plane | [link](https://sotf-mods.com/mods/imaxel/plane-mod) | harder |
+
 Mod project files end with `.rproj` extension
 
 Mod files end with `.rmod` extension
@@ -36,6 +45,7 @@ Mod files end with `.rmod` extension
 ---
 ## Requirements :warning:
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
+- [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) (probably)
 
 ---
 ## FAQ :question:
@@ -52,12 +62,15 @@ Absolutely yes! Some nodes may sound unfamiliar like the **Unity** node category
 
 The application was built with a focus on RedLoader by using it's functionalities and making nodes based on it. The mods themselves are read and resolved by a RedLoader mod (*RedNodeLoader*), which executes each node accordingly.
 
+### How can I use arrays/list?
+
+Containers like arrays and list aren't currently supported and so aren't for loops.
+
 ### **Will an eventual application/loader update break my mods?**
 
 Depending if the mod used some nodes which where greatly changed in functionalities the mod may break or not. (Reverting to an older version of the loader is always possible to keep using it).
 
 ---
-## Pics :camera:
 https://github.com/ImAxel0/RedNodeEditor/assets/124681710/25c4f2b4-2096-475d-8575-71d80d7ba5c1
 
 ### Mod menu mod example
