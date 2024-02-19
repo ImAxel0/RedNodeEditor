@@ -19,10 +19,7 @@ public class Drawings
         public static Vector4 SelectedNodeColor = new(1, 0, 0.28f, 0.8f);
         public static Vector4 Green = new(0.07f, 0.48f, 0.26f, 1);
 
-        public Colors()
-        {
-
-        }
+        public Colors() { }
     }
 
     public static void DrawNodeLine(Vector2 p1, Vector2 p2)
@@ -200,4 +197,5 @@ public class Drawings
     public static ImFontPtr Font18;
     public static ImFontPtr Font20;
     public static ImFontPtr Font22;
+    public static ImFontPtr ForestFont;
 }

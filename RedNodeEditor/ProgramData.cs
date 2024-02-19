@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Veldrid.ImageSharp;
 using static RedNodeEditor.SonsNode;
 
 namespace RedNodeEditor;
@@ -13,6 +14,9 @@ public class ProgramData
     public static string ModsFolder = "";
     public static string GameModsFolder = "";
     public static bool OutputToGameFolder;
+
+    public static IntPtr LogoImage;
+    public static IntPtr BloodSplatterImg;
 
     public static void Initialize()
     {

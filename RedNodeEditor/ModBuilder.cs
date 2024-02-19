@@ -20,15 +20,8 @@ public class ModBuilder
         { typeof(CustomEventNode), new List<NodeConnection> () },
     };
 
-    public static ModData MakeModData()
+    public static ModData MakeModData(string modAuthor, string modVersion)
     {
-        if (ProjectData.ProjectName == "unsaved")
-        {
-            Logger.Append("Error building the mod: project must be saved before building");
-            User32.MessageBox(IntPtr.Zero, "Project must be saved before building", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
-            return null;
-        }
-
         foreach (var connList in BasePair.Values)
             connList.Clear();
 
@@ -48,8 +41,8 @@ public class ModBuilder
         {
             AppVersion = ProgramData.AppVersion,
             ModName = ProjectData.ProjectName.Replace(ProgramData.ProjectExtension, string.Empty),
-            ModAuthor = "Axel",
-            ModVersion = "1.0.0",
+            ModAuthor = modAuthor,
+            ModVersion = modVersion,
             OnInitializeMod = BasePair[typeof(OnInitializeMod)],
             OnSdkInitialized = BasePair[typeof(OnSdkInitialized)],
             OnGameStart = BasePair[typeof(OnGameStart)],

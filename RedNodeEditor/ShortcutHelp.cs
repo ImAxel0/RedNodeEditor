@@ -21,7 +21,7 @@ public class ShortcutHelp
         "CTRL+MOUSE WHEEL = ZOOM IN/OUT\n" +
         "F1 = QUICK NODE SELECTOR";
 
-    public static void ShortcutLisener()
+    public static void ShortcutListener()
     {
         if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.O)))
         {
@@ -56,11 +56,7 @@ public class ShortcutHelp
         
         if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.B)))
         {
-            ModData modData = ModBuilder.MakeModData();
-            if (modData != null)
-            {
-                ModBuilder.SerializeModData(modData);
-            }
+            ProjectDialogBuild.ShowDialog = true;
             return;
         }
         

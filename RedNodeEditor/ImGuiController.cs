@@ -7,6 +7,9 @@ using ImGuiNET;
 using Veldrid;
 using Vanara.PInvoke;
 using System.ComponentModel;
+using Veldrid.ImageSharp;
+using Vanara.InteropServices;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace RedNodeEditor;
 
@@ -68,12 +71,19 @@ public class ImGuiController : IDisposable
         Utilities.TryGetEmbeddedResourceBytes("Roboto-Regular", out var fontData);
         GCHandle pinnedArray = GCHandle.Alloc(fontData, GCHandleType.Pinned);
         IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+
+        Utilities.TryGetEmbeddedResourceBytes("HeadlinerNo.45", out var forestFont);
+        GCHandle pinnedArray2 = GCHandle.Alloc(forestFont, GCHandleType.Pinned);
+        IntPtr pointer2 = pinnedArray2.AddrOfPinnedObject();
+        
         Drawings.Font16 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 16); LoadIcons(14);
         Drawings.Font14 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 14); LoadIcons(14);
         Drawings.Font18 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 18); LoadIcons(14);
         Drawings.Font20 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 20); LoadIcons(14);
         Drawings.Font22 = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer, fontData.Length, 22); LoadIcons(14);
+        Drawings.ForestFont = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(pointer2, forestFont.Length, 50);
         pinnedArray.Free();
+        pinnedArray2.Free();
 
         ImFontConfig* config = io.Fonts.ConfigData[0];
         config->OversampleH = 5;
@@ -124,6 +134,29 @@ public class ImGuiController : IDisposable
                 var fontPtr = ImGui.GetIO().Fonts.AddFontFromMemoryTTF(new IntPtr(buffer), fontDataBuffer.Length, fontSize, icons_config, IconFonts.FontAwesome6.IconFontRanges);
             }
         }
+    }
+
+    public static void LoadImages(GraphicsDevice _gd, ImGuiController _controller)
+    {
+        // Logo
+        TryGetEmbeddedResourceBytes("Logo", out var logoData);
+        Stream stream = new MemoryStream();
+        stream.Write(logoData);
+        stream.Position = 0;
+
+        var img = new ImageSharpTexture(stream);
+        var dimg = img.CreateDeviceTexture(_gd, _gd.ResourceFactory);
+        ProgramData.LogoImage = _controller.GetOrCreateImGuiBinding(_gd.ResourceFactory, dimg);
+
+        // Blood splatter
+        TryGetEmbeddedResourceBytes("BloodSplatter", out var bloodData);
+        Stream stream2 = new MemoryStream();
+        stream2.Write(bloodData);
+        stream2.Position = 0;
+
+        var bloodImg = new ImageSharpTexture(stream2);
+        var blooddImg = bloodImg.CreateDeviceTexture(_gd, _gd.ResourceFactory);
+        ProgramData.BloodSplatterImg = _controller.GetOrCreateImGuiBinding(_gd.ResourceFactory, blooddImg);
     }
 
     public void WindowResized(int width, int height)

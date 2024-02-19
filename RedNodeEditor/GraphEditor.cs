@@ -59,9 +59,9 @@ public class GraphEditor
 
         ImGui.SetNextWindowScroll(EditorScrollPos);      
         ImGui.BeginChild("EditorWindow", ImGui.GetContentRegionAvail(), ImGuiChildFlags.Border, 
-             ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse); // | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse
+             ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
         CurrentEditorWinSize = ImGui.GetWindowSize();
-        
+
         EditorScrollPos = new Vector2(ImGui.GetScrollX(), ImGui.GetScrollY());
 
         RenderMenuBar();
@@ -91,6 +91,9 @@ public class GraphEditor
 
         if (QuickNodeSelector.ShowSelector)
             QuickNodeSelector.Render();
+
+        ImGui.SetCursorScreenPos(new Vector2(ImGui.GetIO().DisplaySize.X - 100, ImGui.GetIO().DisplaySize.Y - 90));
+        ImGui.Image(ProgramData.LogoImage, new(50, 50), Vector2.Zero, Vector2.One, new(1, 1, 1, .5f));
 
         ImGui.Dummy(new(1000000, 1000000));
         ImGuiTheme.ApplyTheme();

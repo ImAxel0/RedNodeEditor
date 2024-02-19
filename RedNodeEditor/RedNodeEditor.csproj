@@ -13,9 +13,12 @@
 
   <ItemGroup>
     <None Remove="cimgui.dll" />
+    <None Remove="Resources\Font\HeadlinerNo.45.ttf" />
     <None Remove="Resources\Font\Roboto-Regular.ttf" />
     <None Remove="imgui-frag.hlsl.bytes" />
     <None Remove="imgui-vertex.hlsl.bytes" />
+    <None Remove="Resources\Images\BloodSplatter.png" />
+    <None Remove="Resources\Images\Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Font\HeadlinerNo.45.ttf" />
     <EmbeddedResource Include="Resources\Font\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Images\BloodSplatter.png" />
+    <EmbeddedResource Include="Resources\Images\Logo.png" />
     <EmbeddedResource Include="Resources\imgui-frag.hlsl.bytes" />
     <EmbeddedResource Include="Resources\imgui-vertex.hlsl.bytes" />
   </ItemGroup>
@@ -36,6 +42,7 @@
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
     <PackageReference Include="Vanara.PInvoke.User32" Version="3.4.17" />
     <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0" />
     <PackageReference Include="Veldrid.StartupUtilities" Version="4.9.0" />
   </ItemGroup>
 

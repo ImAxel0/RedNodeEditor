@@ -6,6 +6,8 @@ using ImGuiNET;
 using System.Numerics;
 using Vanara.PInvoke;
 using IconFonts;
+using System;
+using Veldrid.ImageSharp;
 
 namespace RedNodeEditor;
 
@@ -39,6 +41,7 @@ class Program
 
         ImGuiTheme.ImGuiStyle = ImGui.GetStyle();
         ImGuiTheme.ApplyTheme();
+        ImGuiController.LoadImages(_gd, _controller);
 
         while (_window.Exists)
         {
@@ -91,10 +94,12 @@ class Program
 
         ProjectDialogLoad.Render();
         ProjectDialogSave.Render();
+        ProjectDialogBuild.Render();
+        AboutDialog.Render();
 
         ImGui.End();
 
-        ShortcutHelp.ShortcutLisener();
+        ShortcutHelp.ShortcutListener();
     }
 
     public static void RenderMenuBar()
@@ -184,11 +189,7 @@ class Program
         {
             if (ImGui.MenuItem("Build Mod", "Ctrl+B"))
             {
-                ModData modData = ModBuilder.MakeModData();
-                if (modData != null)
-                {
-                    ModBuilder.SerializeModData(modData);
-                }
+                ProjectDialogBuild.ShowDialog = true;
             }
             ImGui.Checkbox("Build to mods folder", ref ProgramData.OutputToGameFolder);
             Drawings.NodeTooltip("If checked and the directory exist, outputs the mod file in the SonsOfTheForest/Mods/RedNodeLoader/Mods folder");
@@ -211,12 +212,7 @@ class Program
         }
         if (ImGui.BeginMenu($"{FontAwesome6.CircleUser} About"))
         {
-            ImGui.Text("Application");
-            Drawings.NodeTooltip($"RedNodeEditor v{ProgramData.AppVersion} (Beta)\nDeveloped by Im-_-Axel");
-
-            if (ImGui.MenuItem("Source code"))
-                Process.Start(new ProcessStartInfo("https://github.com/ImAxel0/RedNodeEditor") { UseShellExecute = true });
-
+            AboutDialog.ShowDialog = true;
             ImGui.EndMenu();
         }
         ImGui.EndMenuBar();

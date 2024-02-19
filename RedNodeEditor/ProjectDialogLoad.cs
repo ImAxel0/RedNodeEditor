@@ -1,5 +1,6 @@
 ﻿using IconFonts;
 using ImGuiNET;
+using System.Numerics;
 
 namespace RedNodeEditor;
 
@@ -20,8 +21,9 @@ public class ProjectDialogLoad
 
         ImGui.OpenPopup($"Choose a mod project to load {FontAwesome6.FolderOpen}");
         ImGui.SetNextWindowSize(new(600, 400));
+        ImGui.SetNextWindowPos(ImGui.GetIO().DisplaySize / 2 - new Vector2(300, 200));
         ImGui.PushFont(Drawings.Font20);
-        ImGui.BeginPopupModal($"Choose a mod project to load {FontAwesome6.FolderOpen}", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking);
+        ImGui.BeginPopupModal($"Choose a mod project to load {FontAwesome6.FolderOpen}", ref ShowDialog, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoMove);
         ImGui.PopFont();
 
         ImGui.BeginChild("LoadingDialogTopBar", new System.Numerics.Vector2(ImGui.GetContentRegionAvail().X, 40), ImGuiChildFlags.Border);

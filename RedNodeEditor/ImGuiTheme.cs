@@ -7,6 +7,7 @@ public class ImGuiTheme
 {
     public static ImGuiStylePtr ImGuiStyle;
 
+    static float _windowRounding = 0;
     static float _childRounding = 0;
     static float _frameRounding = 2;
     static float _frameBorder = 0;
@@ -18,6 +19,7 @@ public class ImGuiTheme
 
     public static void ApplyTheme()
     {
+        ImGuiStyle.WindowRounding = _windowRounding;
         ImGuiStyle.ChildRounding = _childRounding;
         ImGuiStyle.FrameRounding = _frameRounding;
         ImGuiStyle.FrameBorderSize = _frameBorder;
