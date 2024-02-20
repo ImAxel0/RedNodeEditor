@@ -5,7 +5,7 @@
 <h1 align="center"><ins>UNRELEASED</ins></h1>
 
 # RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
-  **A custom node editor to make mods for Sons of the Forest without programming knowledge** 
+  **A custom node editor to make mods for [Sons of the Forest](https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/)** 
   
   :orange_book: [Documentation](https://app.gitbook.com/o/NHbK8lCm0flXIHLC9Bun/s/16eHiWrLvkdzPgx4n88e/) :orange_book:
 
@@ -29,8 +29,15 @@
 3. Open the app and start making mods
 
 ---
+## Mods installation :arrow_double_down:
+1. Install RedNodeLoader as a standard RedLoader mod
+2. Place the `.rmod` file and eventual mod folder in the `SonsOfTheForest/Mods/RedNodeLoader/Mods` folder
+
+---
 ## General infos
-Two project examples are provided with installation:
+> Administrator privileges are required to write mod files to disk
+
+Two project examples are provided with the editor installation:
 
 | Project name | Description | Real mod link | Difficulty |
 |:----------:|:---------:|:---------:|:-------------:|
@@ -40,7 +47,7 @@ Two project examples are provided with installation:
 Mod project files end with `.rproj` extension
 
 Mod files end with `.rmod` extension
-> The custom extensions are only there for clarity, in reality they are just .json and .xml respectively
+> The custom extensions are only there for clarity, in reality they are .json and .xml respectively
 
 ---
 ## Requirements :warning:
