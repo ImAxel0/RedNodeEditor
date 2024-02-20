@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ToniMacaroni/RedLoader/main/MetadataSchema.json",
+  "id": "RedNodeLoader",
+  "author": "Im-_-Axel",
+  "version": "0.1.0",
+  "description": "Mod loader for RedNodeEditor mods",
+  "gameVersion": "1.0.0",
+  "type": "Mod",
+  "url": "..."
+}
