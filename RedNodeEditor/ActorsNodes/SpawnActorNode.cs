@@ -1,15 +1,28 @@
-﻿namespace RedNodeEditor.ActorsNodes;
+﻿using Newtonsoft.Json;
+using Sons.Ai.Vail;
+using Sons.Atmosphere;
+using System.Xml.Serialization;
+
+namespace RedNodeEditor.ActorsNodes;
 
 public class SpawnActorNode : SonsNode
 {
-    public string name { get; set; }
+    [IgnoreProperty]
+    public VailActorTypeId EnumValue { get; set; } = VailActorTypeId.Robby;
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public List<Enum> ActorsEnum { get; set; } = new();
 
     public SpawnActorNode()
     {
         Name = "SpawnActor";
-        Description = "Spawn the actor by name (SP or HOST only)";
+        Description = "Spawns the selected actor (SP or HOST only)";
         NodeCategory = NodeCategories.Actors;
 
-        ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(name)});
+        foreach (var actor in Enum.GetValues(typeof(VailActorTypeId)))
+            ActorsEnum.Add((VailActorTypeId)actor);
+
+        ArgsIn.Add(new ArgIn { Type = typeof(VailActorTypeId), ArgName = nameof(Type) });
     }
 }

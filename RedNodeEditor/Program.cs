@@ -6,8 +6,6 @@ using ImGuiNET;
 using System.Numerics;
 using Vanara.PInvoke;
 using IconFonts;
-using System;
-using Veldrid.ImageSharp;
 
 namespace RedNodeEditor;
 
