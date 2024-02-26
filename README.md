@@ -2,8 +2,6 @@
  <img src="https://i.imgur.com/EeBBqDU.png" width="300" height="300" />
 </p>
 
-<h1 align="center"><ins>UNRELEASED</ins></h1>
-
 # RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
   **A custom node editor to make mods for [Sons of the Forest](https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/)** 
   
