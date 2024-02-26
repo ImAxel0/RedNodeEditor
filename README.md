@@ -5,7 +5,7 @@
 # RedNodeEditor [![Github All Releases](https://img.shields.io/github/downloads/ImAxel0/RedNodeEditor/total.svg)]()  [![Github All Releases](https://img.shields.io/github/v/release/ImAxel0/RedNodeEditor)]()
   **A custom node editor to make mods for [Sons of the Forest](https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/)** 
   
-  :orange_book: [Documentation](https://app.gitbook.com/o/NHbK8lCm0flXIHLC9Bun/s/16eHiWrLvkdzPgx4n88e/) :orange_book:
+  :orange_book: [Documentation](https://alexs-organization-34.gitbook.io/rednodeeditor/) :orange_book:
 
 ---
  ## FEATURES :star:
