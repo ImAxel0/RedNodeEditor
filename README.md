@@ -28,7 +28,7 @@
 
 ---
 ## Mods installation :arrow_double_down:
-1. Install RedNodeLoader as a standard RedLoader mod
+1. Install [RedNodeLoader](https://sotf-mods.com/mods/imaxel/rednodeloader) as a standard RedLoader mod
 2. Place the `.rmod` file and eventual mod folder in the `SonsOfTheForest/Mods/RedNodeLoader/Mods` folder
 
 ---
