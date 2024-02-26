@@ -1,6 +1,7 @@
 ﻿using RedLoader;
 using SonsSdk;
 using System.Xml.Serialization;
+using static RedNodeLoader.GlobalEnums;
 
 namespace RedNodeLoader.EventsNodes;
 
@@ -9,12 +10,6 @@ public class SubscribeEventToNode : SonsNode
     public string EventId { get; set; }
     public string EventName { get; set; }
     public BaseNode EnumValue { get; set; }
-
-    [XmlType("SubscribeEventToNode_BaseNode")]
-    public enum BaseNode
-    {
-        OnInitializeMod, OnSdkInitialized, OnGameStart, OnWorldUpdate, OnUpdate
-    }
 
     public override void Execute()
     {
@@ -38,6 +33,9 @@ public class SubscribeEventToNode : SonsNode
                 break;
             case BaseNode.OnUpdate:
                 GlobalEvents.OnUpdate.Subscribe(cEvent.Execute);
+                break;
+            case BaseNode.OnFixedUpdate:
+                GlobalEvents.OnFixedUpdate.Subscribe(cEvent.Execute);
                 break;
         }
     }

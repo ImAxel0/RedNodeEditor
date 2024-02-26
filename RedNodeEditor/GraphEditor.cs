@@ -203,9 +203,6 @@ public class GraphEditor
         if (node.SizeOverride != Vector2.Zero)
             return node.SizeOverride;
 
-        //if (propertiesCount == 0 && node.ArgsOut.Count <= 1 && node.ArgsIn.Count <= 1)
-            //return new Vector2(250, 120);
-
         switch (node.ArgsIn.Count)
         {
             case 0:

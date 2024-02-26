@@ -1245,7 +1245,7 @@ public class AXSUI
 
         var titleContainer = SContainer.Background((Color)color, style).PaddingVertical(10).PHeight(50).Id("titlecontainer")
             - AxTextAutoSize(title).Id("menutitle")
-            - AxButton("X", CloseMenuPanel, new Vector2(50, 50), AnchorType.TopRight).Background(EBackground.RoundedStandard).Id($"close{id}");
+            - AxButton("X", CloseMenuPanel, new Vector2(50, 50), AnchorType.TopRight).Background(EBackground.RoundedStandard).Color(new Color(1.00f, 0.13f, 0.29f)).Id($"close{id}");
 
         if (canResize)
         {

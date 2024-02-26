@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Xml.Serialization;
+using static RedNodeEditor.GlobalEnums;
 
 namespace RedNodeEditor.EventNodes;
 
@@ -13,15 +14,9 @@ public class UnsubscribeEventFromNode : SonsNode
     [IgnoreProperty]
     public BaseNode EnumValue { get; set; } = BaseNode.OnUpdate;
 
-    [XmlType("UnsubscribeEventFromNode_BaseNode")]
-    public enum BaseNode
-    {
-        OnInitializeMod, OnSdkInitialized, OnGameStart, OnWorldUpdate, OnUpdate
-    }
-
     [XmlIgnore]
     [JsonIgnore]
-    public List<Enum> BaseNodeList { get; set; } = new() { BaseNode.OnInitializeMod, BaseNode.OnSdkInitialized, BaseNode.OnGameStart, BaseNode.OnWorldUpdate, BaseNode.OnUpdate };
+    public List<Enum> BaseNodeList { get; set; } = new();
 
     public UnsubscribeEventFromNode()
     {
@@ -29,6 +24,9 @@ public class UnsubscribeEventFromNode : SonsNode
         Description = "Unsubscribes a CustomEvent node from one of the base nodes";
         NodeCategory = NodeCategories.FlowChange;
         SizeOverride = new(270, 190);
+
+        foreach (var baseNode in Enum.GetValues(typeof(BaseNode)))
+            BaseNodeList.Add((BaseNode)baseNode);
 
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });
         ArgsIn.Add(new ArgIn { Type = typeof(string), ArgName = nameof(EventName), Hide = true });

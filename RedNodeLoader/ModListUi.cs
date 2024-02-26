@@ -19,7 +19,7 @@ public class ModListUi
         var toniContainer = GetPanel(ModManagerUi.MOD_LIST_ID)
             - AxButton("", ShowModList, new(100, 100), AnchorType.TopLeft).Color(Color.white.WithAlpha(0.95f)).Background(logoSprite).Position(20, -120);
 
-        var modsPanel = AxCreateSidePanel(ModListId, false, "<color=#454545>INSTALLED MODS</color>", Side.Left, 600, new Color(0.07f, 0.05f, 0.03f))
+        var modsPanel = AxCreateSidePanel(ModListId, false, "<color=#454545>INSTALLED MODS</color>", Side.Left, 600, new Color(0f, 0.01f, 0.02f, 0.99f))
             .OverrideSorting(999)
             .Active(false);
 

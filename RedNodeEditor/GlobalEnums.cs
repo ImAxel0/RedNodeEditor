@@ -2,6 +2,11 @@
 
 public class GlobalEnums
 {
+    public enum BaseNode
+    {
+        OnInitializeMod, OnSdkInitialized, OnGameStart, OnWorldUpdate, OnUpdate, OnFixedUpdate
+    }
+
     public enum RangedWeaponEnum
     {
         Bow, CompactPistol, Crossbow, Grenade, Molotov, Revolver,
