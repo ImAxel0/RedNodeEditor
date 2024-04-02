@@ -11,6 +11,7 @@
  ## FEATURES :star:
  - Made specifically for [**RedLoader**](https://github.com/ToniMacaroni/RedLoader/tree/main)
  - **Shareable projects**: share you mod projects with others
+ - **Runtime execution**: try node connections in realtime while in game
  - **Error detection**: detects common errors when building the mod
  - **Colored graph comments**: comment your node sections with what they do
  - **Node descriptions**: each node when hovered shows a description about what it does or how should be used
