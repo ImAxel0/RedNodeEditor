@@ -53,7 +53,19 @@ public class ShortcutHelp
             ProjectData.CreateNewProject();
             return;
         }
-        
+
+        if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.E)))
+        {
+            PipeManager.ExecuteMod();
+            return;
+        }
+
+        if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.T)))
+        {
+            PipeManager.StopExecution();
+            return;
+        }
+
         if (ImGui.GetIO().KeyCtrl && ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.B)))
         {
             ProjectDialogBuild.ShowDialog = true;

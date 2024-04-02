@@ -1,12 +1,14 @@
-﻿using System.Reflection;
+﻿using System.IO.Pipes;
+using System.Reflection;
 using Veldrid.ImageSharp;
+using static Octree;
 using static RedNodeEditor.SonsNode;
 
 namespace RedNodeEditor;
 
 public class ProgramData
 {
-    public static readonly string AppVersion = "0.1.0";
+    public static readonly string AppVersion = "0.2.0";
     public static readonly string ProjectExtension = ".rproj";
     public static readonly string ModExtension = ".rmod";
     public static string ExeFolder = "";
@@ -39,10 +41,22 @@ public class ProgramData
                            .Where(t => typeof(SonsNode).IsAssignableFrom(t) && t.IsClass && t.IsSubclassOf(typeof(SonsNode)))
                            .ToList();
 
+#if DEBUG
+        if (File.Exists(Path.Combine(ProjectsFolder, "Nodes.txt")))
+        {
+            File.Delete(Path.Combine(ProjectsFolder, "Nodes.txt"));
+        }
+#endif
+
         Logger.Append("Loading nodes...");
         foreach (Type nodeType in nodeTypes)
         {
             SonsNode node = Activator.CreateInstance(nodeType) as SonsNode;
+
+#if DEBUG
+            File.AppendAllText(Path.Combine(ProjectsFolder, "Nodes.txt"), node.Name + "\n");
+#endif
+
             if (node != null)
             {
                 if (node.NodeType == NodeTypes.Variable)
@@ -61,5 +75,7 @@ public class ProgramData
         Logger.Append($"All {nodeTypes.Count} nodes loaded!\n");
 
         ProjectData.CreateNewProject();
+
+        //Task.Run(() => PipeManager.WaitForConnection());
     }
 }

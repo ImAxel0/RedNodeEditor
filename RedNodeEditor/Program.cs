@@ -6,6 +6,8 @@ using ImGuiNET;
 using System.Numerics;
 using Vanara.PInvoke;
 using IconFonts;
+using System.IO.Pipes;
+using System.Xml.Serialization;
 
 namespace RedNodeEditor;
 
@@ -97,7 +99,7 @@ class Program
 
         ImGui.End();
 
-        ShortcutHelp.ShortcutListener();
+        ShortcutHelp.ShortcutListener();     
     }
 
     public static void RenderMenuBar()
@@ -183,6 +185,22 @@ class Program
             ImGui.EndMenu();
         }
 
+        if (ImGui.BeginMenu($"{FontAwesome6.FileExport} Runtime"))
+        {
+            if (ImGui.MenuItem("Execute mod", "Ctrl+E"))
+            {
+                PipeManager.ExecuteMod();
+            }
+            Drawings.NodeTooltip("Directly execute the node connections while in game.\nGame must be open and RedNodeLoader installed");
+
+            if (ImGui.MenuItem("Stop execution", "Ctrl+T"))
+            {
+                PipeManager.StopExecution();
+            }
+
+            ImGui.EndMenu();
+        }
+
         if (ImGui.BeginMenu($"{FontAwesome6.Code} Build"))
         {
             if (ImGui.MenuItem("Build Mod", "Ctrl+B"))
@@ -201,7 +219,7 @@ class Program
             Drawings.NodeTooltip(ShortcutHelp.ShortcutInfo);
 
             if (ImGui.MenuItem("Documentation"))
-                Process.Start(new ProcessStartInfo("https://app.gitbook.com/o/NHbK8lCm0flXIHLC9Bun/s/16eHiWrLvkdzPgx4n88e/") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo("https://alexs-organization-34.gitbook.io/rednodeeditor/") { UseShellExecute = true });
 
             if (ImGui.MenuItem("SOTF Discord"))
                 Process.Start(new ProcessStartInfo("https://discord.gg/sotf") { UseShellExecute = true });

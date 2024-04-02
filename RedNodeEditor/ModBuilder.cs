@@ -20,20 +20,23 @@ public class ModBuilder
         { typeof(CustomEventNode), new List<NodeConnection> () },
     };
 
-    public static ModData MakeModData(string modAuthor, string modVersion)
+    public static ModData MakeModData(string modAuthor, string modVersion, bool isRuntime = false)
     {
-        if (string.IsNullOrEmpty(modAuthor))
+        if (!isRuntime)
         {
-            Logger.Append("Error building the mod: mod author field can't be empty");
-            User32.MessageBox(IntPtr.Zero, "Mod author field can't be empty", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
-            return null;
-        }
+            if (string.IsNullOrEmpty(modAuthor))
+            {
+                Logger.Append("Error building the mod: mod author field can't be empty");
+                User32.MessageBox(IntPtr.Zero, "Mod author field can't be empty", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
+                return null;
+            }
 
-        if (string.IsNullOrEmpty(modVersion))
-        {
-            Logger.Append("Error building the mod: mod version field can't be empty");
-            User32.MessageBox(IntPtr.Zero, "Mod version field can't be empty", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
-            return null;
+            if (string.IsNullOrEmpty(modVersion))
+            {
+                Logger.Append("Error building the mod: mod version field can't be empty");
+                User32.MessageBox(IntPtr.Zero, "Mod version field can't be empty", "Error building the mod", User32.MB_FLAGS.MB_ICONWARNING | User32.MB_FLAGS.MB_TOPMOST);
+                return null;
+            }
         }
 
         foreach (var connList in BasePair.Values)
@@ -226,6 +229,16 @@ public class ModBuilder
         }
     
         CleanForNextBuild();
+    }
+
+    public static string SerializeModDataAsString(ModData modData)
+    {
+        var derived = GetDerivedTypes(typeof(SonsNode));
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModData), derived);
+        StringWriter stringWriter = new StringWriter();
+        xmlSerializer.Serialize(stringWriter, modData);
+        CleanForNextBuild();
+        return stringWriter.ToString();
     }
 
     static void CleanForNextBuild()
