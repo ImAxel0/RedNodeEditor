@@ -1,15 +1,18 @@
-﻿using RedLoader;
+﻿using Pathfinding;
+using RedLoader;
 using RedLoader.Utils;
 using RedNodeLoader.EventsNodes;
 using RedNodeLoader.FlowNodes;
 using SonsSdk;
+using System.IO.Pipes;
 using UnityEngine;
+using Path = System.IO.Path;
 
 namespace RedNodeLoader;
 
 public class RedNodeLoader : SonsMod
 {
-    public static readonly string LoaderVersion = "0.1.0";
+    public static readonly string LoaderVersion = "0.2.0";
 
     /// <summary>
     /// all mods datas
@@ -54,10 +57,18 @@ public class RedNodeLoader : SonsMod
         return !node.GetType().CustomAttributes.Any(at => at.AttributeType == typeof(IsGetVariable));
     }
 
-    static void ResolveConnections(NodeConnection connection)
+    public static List<string> ResolveConnections(NodeConnection connection)
     {
+        List<string> stored = new();
+
         if (connection.Node.GetType() == typeof(IfStatementNode))
         {
+            if (!IdNodePair.ContainsKey(connection.Node.Id))
+            {
+                IdNodePair.Add(connection.Node.Id, connection.Node);
+                stored.Add(connection.Node.Id);
+            }             
+
             var allIfNodes = GetAllIfStatements((IfStatementNode)connection.Node);
 
             foreach (var ifNode in allIfNodes)
@@ -65,18 +76,30 @@ public class RedNodeLoader : SonsMod
                 ifNode.TrueBranchNodes.ForEach(node => {
 
                     if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
+                    {
                         IdNodePair.Add(node.Id, node);
+                        stored.Add(node.Id);
+                    }
+                        
                 });
 
                 ifNode.FalseBranchNodes.ForEach(node => {
 
                     if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
+                    {
                         IdNodePair.Add(node.Id, node);
+                        stored.Add(node.Id);
+                    }                    
                 });
             }
         }
         else if (!IdNodePair.ContainsKey(connection.Node.Id) && ShouldStorePair(connection.Node))
+        {
             IdNodePair.Add(connection.Node.Id, connection.Node);
+            stored.Add(connection.Node.Id);
+        }
+
+        return stored; 
     }
 
     protected override void OnEarlyInitializeMelon()
@@ -133,47 +156,79 @@ public class RedNodeLoader : SonsMod
         });
 
         // populating all custom events for all mods
-        ModsData.ForEach(modData =>
+        foreach (var mod in ModsData)
         {
-            modData.CustomEvents.ForEach(cEvent => {
+            PopulateCustomEvents(mod);
+        }
+    }
 
-                // adding the custom event to the nodes dictionary
-                if (!IdNodePair.ContainsKey(cEvent.Node.Id))
-                    IdNodePair.Add(cEvent.Node.Id, cEvent.Node);
+    public static Tuple<List<string>, List<string>> PopulateCustomEvents(ModData modData)
+    {
+        List<string> stored = new();
+        List<string> storedCEvents = new();
 
-                // adding the custom event to the events dictionary
-                var customEvent = (CustomEventNode)cEvent.Node;
-                if (!CustomEvents.ContainsKey(customEvent.EventId))
-                    CustomEvents.Add(customEvent.EventId, customEvent);
-                else RLog.BigError("Error", $"{modData.ModName} mod contains a {nameof(CustomEventNode)} which has the same EventId as another mod.");
+        modData.CustomEvents.ForEach(cEvent => {
 
-                // handling custom event
-                foreach (var node in customEvent.EventNodes)
+            // adding the custom event to the nodes dictionary
+            if (!IdNodePair.ContainsKey(cEvent.Node.Id))
+            {
+                IdNodePair.Add(cEvent.Node.Id, cEvent.Node);
+                stored.Add(cEvent.Node.Id);
+            }
+                
+            // adding the custom event to the events dictionary
+            var customEvent = (CustomEventNode)cEvent.Node;
+            if (!CustomEvents.ContainsKey(customEvent.EventId))
+            {
+                CustomEvents.Add(customEvent.EventId, customEvent);
+                storedCEvents.Add(customEvent.EventId);
+            }              
+            else          
+                RLog.BigError("Error", $"{modData.ModName} mod contains a {nameof(CustomEventNode)} which has the same EventId as another mod.");            
+
+            // handling custom event
+            foreach (var node in customEvent.EventNodes)
+            {
+                if (node.GetType() == typeof(IfStatementNode))
                 {
-                    if (node.GetType() == typeof(IfStatementNode))
+                    if (!IdNodePair.ContainsKey(node.Id))
                     {
-                        var allIfNodes = GetAllIfStatements((IfStatementNode)node);
-
-                        foreach (var ifNode in allIfNodes)
-                        {
-                            ifNode.TrueBranchNodes.ForEach(node => {
-
-                                if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
-                                    IdNodePair.Add(node.Id, node);
-                            });
-
-                            ifNode.FalseBranchNodes.ForEach(node => {
-
-                                if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
-                                    IdNodePair.Add(node.Id, node);
-                            });
-                        }
-                    }
-                    else if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
                         IdNodePair.Add(node.Id, node);
+                        stored.Add(node.Id);
+                    }
+
+                    var allIfNodes = GetAllIfStatements((IfStatementNode)node);
+
+                    foreach (var ifNode in allIfNodes)
+                    {
+                        ifNode.TrueBranchNodes.ForEach(node => {
+
+                            if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
+                            {
+                                IdNodePair.Add(node.Id, node);
+                                stored.Add(node.Id);
+                            }                              
+                        });
+
+                        ifNode.FalseBranchNodes.ForEach(node => {
+
+                            if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
+                            {
+                                IdNodePair.Add(node.Id, node);
+                                stored.Add(node.Id);
+                            }                              
+                        });
+                    }
                 }
-            });
+                else if (!IdNodePair.ContainsKey(node.Id) && ShouldStorePair(node))
+                {
+                    IdNodePair.Add(node.Id, node);
+                    stored.Add(node.Id);
+                }                 
+            }
         });
+
+        return new Tuple<List<string>, List<string>>(stored, storedCEvents);
     }
 
     protected override void OnInitializeMod()
@@ -189,6 +244,7 @@ public class RedNodeLoader : SonsMod
     protected override void OnSdkInitialized()
     {
         ModListUi.Create();
+        PipeManager.WaitForConnection();
 
         ModsData.ForEach(modData =>
         {
@@ -207,7 +263,7 @@ public class RedNodeLoader : SonsMod
             modData.OnFixedUpdate.ForEach(connection => {
                 GlobalEvents.OnFixedUpdate.Subscribe(connection.Node.Execute);
             });
-        });
+        });      
     }
 
     public static SonsNode GetNodeById(string id)
